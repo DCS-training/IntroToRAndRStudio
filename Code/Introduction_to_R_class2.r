@@ -63,14 +63,14 @@ iris_set_petal_long %>% slice_min(Sepal.Length, n =5) # A funky little demo of w
 # Tip - go to Session, and Set Working Directory
 read_csv("Data/2021_election.csv") # The read_csv() function in 'readr' part of the tidyverse, is the easiest way to do this
 
-Elec <- read_csv("2021_election.csv") # Rather than just seeing a single output, you can assign the data to a variable
+Elec <- read_csv("Data/2021_election.csv") # Rather than just seeing a single output, you can assign the data to a variable
 
 View(Elec) # To view the dataframe, or click on the object in the global environment
 
 head(Elec) # head provides the first 5 entries
 summary(Elec) # summary provides a summarised overview of all dataset variables
 
-spec_csv("2021_election.csv") # The spec_csv() function in readr provides information about the data 
+spec_csv("Data/2021_election.csv") # The spec_csv() function in readr provides information about the data 
 
 Demog <- read_csv("Demography.csv")
 spec(Demog) # spec() without _csv can also be used for dataframe objects in the working environment
@@ -115,6 +115,7 @@ class(Elec$Region)
 Elec$Region <- as_factor(Elec$Region)
 is.factor(Elec$Region)
 class(Elec$Region)
+summary(Elec$Region)
 
 # ==== Creating New Data ====
 # To calculate the winning party in each constituency, we can select the column with the largest vote share
@@ -131,6 +132,10 @@ Long_Elec <- Elec %>% pivot_longer(
 
 # Notice how we now have a new data set with 438 observations over 7 variables.
 summary(Long_Elec)
+
+# We can also use code to quickly visualise our data - details of how to produce prettier plots will be covered in future CDCS workshops. 
+hist(Long_Elec$votes_earned) # histogram code
+boxplot(Long_Elec$votes_earned) # boxplot code
 
 # Now to transform our character variables to a factor variables. This allows R to help us identify the count values of the Constituencies, Regions and Political Parties.
 
@@ -250,17 +255,19 @@ ggplot(aes(fill = Politcal_Party, y = Mean_age, x = fct_reorder(Constituency, Me
 
 # ==== Research Questions ====
 # Let's try and answer some questions about the election data, by using some of the data wrangling techniques we have seen today.
+# We have provided hints/skeletons for the early questions. Be sure to ask for help if you need it. Also, feel free to play around and experiment! It's the best way of getting an intuitaive understanding of what the code is doing. 
+# Embrace mistakes and have fun!
+
 # cheatsheets/data-transformation.pdf at main · rstudio/cheatsheets (github.com) 
 # Useful functions: select(), mutate(), group_by(), summarise(), arrange(), slice(), head(), merge(),
 
-# Class 2 Solutions
-
-# 1. Merge the entirety of the two dataframes together using merge and ensuring that both are the correct case. Change the order of the columns if you like.
+# 1. Merge the entirety of the two dataframes together using merge and ensuring that both are the correct case. Be sure to merge on the constituency variables across both datasets. 
 
 ## Function used: merge()
 ##Datasets reccomended: Turnout_Elc, Long_Demog 
 ## Tip: using "%>% mutate_if(is.character, as.factor)" will save you time.
 
+Meged_data <- merge(..., ..., by.x=..., by.y=...)
 
 # 2. Which constituency had the highest turnout? 
 
@@ -268,16 +275,35 @@ ggplot(aes(fill = Politcal_Party, y = Mean_age, x = fct_reorder(Constituency, Me
 ##Within arrange(), you can use desc() to modify the order by which variables are arranged.
 
 ### determening lowest turnout
-
+... %>% 
+  select(..., ...) %>% # focusing our variables 
+ group_by(Constituency) %>% # Grouping by constituency as we want to determine the turnout by constituency
+  summarise(Mean_turnout= mean(...))  %>% # we use summarise to provide a summarised output by constituency. 
+  arrange(Mean_turnout) %>% head()
 
 ### determening highest turnout
-
+... %>% 
+  select(..., ...) %>%
+  group_by(Constituency) %>% 
+  summarise(Mean_turnout= ...())  %>%
+  arrange(desc(...)) %>% # Arranges data with highest turnout first
+  head()
 
 ### Which constituency had the highest turnout? 
-
-
+... %>% 
+  select(..., ...) %>%
+  group_by(...) %>% 
+  summarise(...= ...())  %>%
+  arrange(...(...)) %>%
+  head(n=...)  # We use head and set n to narrow down the output to the highest turnout. Try replacing head() with tail() and see what happens.
+ 
 ### Which constituency had the lowest turnout?
-
+... %>% 
+  select(..., ...) %>%
+  group_by(...) %>% 
+  summarise(...= ...())  %>%
+  arrange(...) %>% #
+  slice() #slice can also be used , remember to set how many rows you want to see
 
 # 3. Output the names of the five constituencies with the highest turnout, and the Region they were each in.
 
@@ -327,5 +353,19 @@ ggplot(aes(fill = Politcal_Party, y = Mean_age, x = fct_reorder(Constituency, Me
 
 
 # Feel free to play around with this data, or your own, and we can help answer any questions that arise.
+# If you want to play around with plotting/data vis, here's a basic skeleton to experiment with.
+# You can also pipe in a solution from above (as I did with the previous example data vis). If you choose to do this, remove your "dataset," from the start of the ggplot command.
+
+ggplot(dataset_name, aes(x = ..., y=..., #fill in and delete the hashtags below to suit your needs.
+                        # color = ...,
+                        # fill = ..., 
+                        # shape = ...,
+                         )) +
+ # geom_point() + # some layers can be combined, such as geom_point() + geom_smooth()
+# geom_smooth(method = "lm") 
+# geom_col() # column charts have plenty of ways to customise. Try adding - position = "dodge" if your plot looks a little strange
+# +facet_wrap(~...) #faceting allows you to split your charts by a category. Try it to see what happens!
+
+                         
 
 #### END ####
