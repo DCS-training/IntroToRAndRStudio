@@ -250,7 +250,7 @@ ggplot(aes(fill = Politcal_Party, y = Mean_age, x = fct_reorder(Constituency, Me
 
 # ==== Research Questions ====
 # Let's try and answer some questions about the election data, by using some of the data wrangling techniques we have seen today.
-
+# cheatsheets/data-transformation.pdf at main · rstudio/cheatsheets (github.com) 
 # Useful functions: select(), mutate(), group_by(), summarise(), arrange(), slice(), head(), merge(),
 
 # Class 2 Solutions
