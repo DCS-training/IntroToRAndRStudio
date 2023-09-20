@@ -35,8 +35,8 @@ Merged_elec %>%
   group_by(Constituency) %>% 
   summarise(Mean_turnout= mean(turnout))  %>%
   arrange(desc(Mean_turnout)) %>%
-  slice(1) %>% # We use slice to narrow down the output to the highest turnout
-  select(Constituency, Mean_turnout) # Output constituency with highest single turnout.
+  head(n=1) # We use slice to narrow down the output to the highest turnout
+ 
 
 ### Which constituency had the lowest turnout?
 Merged_elec %>% 
@@ -44,8 +44,7 @@ Merged_elec %>%
   group_by(Constituency) %>% 
   summarise(Mean_turnout= mean(turnout))  %>%
   arrange(Mean_turnout) %>% #by removing desc, we get the lowest.
-  slice(1) %>% 
-  select(Constituency, Mean_turnout)  
+  slice(1)
 
 #### Tip - You can also just use view (Merged_elec) and click on the Turnout column to arrange by this column.
 
