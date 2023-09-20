@@ -166,3 +166,17 @@ Mean_age_by_winning_party <- New_Merged_elec %>%
   distinct()
 
 view(Mean_age_by_winning_party)
+
+# If you want to play around with plotting/data vis, here's a basic skeleton to experiment with.
+# You can also pipe in a solution from above (as I did with the previous example data vis). If you choose to do this, remove your "dataset," from the start of the ggplot command.
+
+ggplot(dataset_name, aes(x = ..., y=..., #fill in and delete the hashtags below to suit your needs.
+                        # color = ...,
+                        # fill = ..., 
+                        # shape = ...,
+                         )) +
+ # geom_point() + # some layers can be combined, such as geom_point() + geom_smooth()
+# geom_smooth(method = "lm") 
+# geom_col() # column charts have plenty of ways to customise. Try adding - position = "dodge" if your plot looks a little strange
+# +facet_wrap(~...) #faceting allows you to split your charts by a category. Try it to see what happens!
+
