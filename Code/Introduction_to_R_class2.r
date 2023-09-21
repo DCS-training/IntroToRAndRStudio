@@ -12,7 +12,11 @@ library(help = "datasets")
 # iris data
 ?iris
 iris
-head(iris)
+head(iris) # Preview first 6 rows of the data. This can increased by setting "n = ...".
+tail(iris) #Preview last 6 rows of the data. This can also be modified by setting n.
+summary(iris) #Preview a summary of your data - mean, median, quartiles, ranges, count, and variable categories
+boxplot(iris$Petal.Length) # Quick boxplot of your data. Use the $ to choose the variable you're interested in visualising.
+hist(iris$Petal.Length) # Quick histogram of your data. $ is used in same way.
 
 # UCBAdmissions
 ?UCBAdmissions
@@ -51,6 +55,16 @@ iris_set_petal_long[seq(4,8),c(2,3:4)] # This can be combined with the seq() fun
 head(iris_set_petal_long) # View the first 5 rows
 tail(iris_set_petal_long) # View the last 5 rows
 iris_set_petal_long %>% slice_min(Sepal.Length, n =5) # A funky little demo of what tidyverse can offer.  'slice_min()' allows us to view the lowest values associated with a variable. Try changing _min to _max and see what happens. We will explain the %>% function later, but for now this of it as a instructing tool for R.
+
+# Running analyses - Quick run through what we can do. Don't worry if the stats is intimidating. The purpose here is to demonstrate how effective R is for analysis, and to provide an example code reference to help you with your own analyses.
+
+anova <- aov(Petal.Length ~ Species, data = iris) # anova coding template - aov(outcome variable ~ group variable, data = the relevant dataset)
+summary(anova) # Output for the anova
+TukeyHSD(anova) # Post-hoc Tukey Honest Significant Difference test - used to performing multiple pair wise comparison tests between groups.
+
+linear_model <- lm(Petal.Length ~ Sepal.Length + Sepal.Width, data = iris) # linear regression coding. Use the plus sign to add additional variable. Use * to mark interaction effects.
+summary(linear_model)
+
 
 # #### PART 2: Importing and Data Wrangling ####
 
@@ -112,10 +126,11 @@ Lothian <- Elec %>% filter(Region == 'Lothian')
 # Change data class
 
 class(Elec$Region)
-Elec$Region <- as_factor(Elec$Region)
-is.factor(Elec$Region)
-class(Elec$Region)
-summary(Elec$Region)
+Elec_transform$Region <- as_factor(Elec$Region)
+Elec_transform <- Elec %>% mutate(Region = as.factor(Region))
+is.factor(Elec_transform$Region)
+class(Elec_transform$Region)
+summary(Elec_transform$Region)
 
 # ==== Creating New Data ====
 # To calculate the winning party in each constituency, we can select the column with the largest vote share
@@ -126,7 +141,7 @@ summary(Elec$Region)
 
 Long_Elec <- Elec %>% pivot_longer(
   cols = c("SNP", "CON", "LAB", "LD", "GRN", "OTH"), # telling R to identify the columns 
-  names_to = "Politcal_Party", # Giving a name to our category column.
+  names_to = "Political_Party", # Giving a name to our category column.
   values_to = "votes_earned"
 ) 
 
@@ -143,7 +158,7 @@ boxplot(Long_Elec$votes_earned) # boxplot code
 
 Cat_Elec <- Long_Elec %>% mutate(Constituency = as.factor(Constituency),
                                    Region = as.factor(Region),
-                                   Politcal_Party = as.factor(Politcal_Party))
+                                   Political_Party = as.factor(Politcal_Party))
 summary(Cat_Elec)
 
 # Speedier way, but need to be confident that all character variables are suitable for factorising.
@@ -234,19 +249,19 @@ Merged_elec[,1] <- str_to_title(Merged_elec[,1]) # str_to_title() simply changes
 
 #Step 1 - This is the tricky part: summarising our data to get the values we want. We will cover these steps in the tasks below.
 New_Merged_elec %>%
-  select(Constituency, Politcal_Party, Mean_age, votes_earned, Region) %>%
+  select(Constituency, Political_Party, Mean_age, votes_earned, Region) %>%
   group_by(Constituency) %>%
   top_n(n=1, wt = votes_earned) %>% 
   distinct() %>%
-  summarise(Politcal_Party = Politcal_Party,
+  summarise(Politcal_Party = Political_Party,
             Region = Region,
             Mean_age = Mean_age)%>%
   filter(Region == "Lothian") %>% 
   arrange(desc(Mean_age), .by_group = TRUE) %>% # Step 2 - This is the easier part, creating the plot)
-ggplot(aes(fill = Politcal_Party, y = Mean_age, x = fct_reorder(Constituency, Mean_age))) + # This first stage of the plot is to tell R which variables we are interested in. 
+ggplot(aes(fill = Political_Party, y = Mean_age, x = fct_reorder(Constituency, Mean_age))) + # This first stage of the plot is to tell R which variables we are interested in. 
   geom_col()+ #We use geom to select our plot style. Note that geom_col cannot plot categories on its y axis.
   coord_flip() + # Coord_flip is something I like to use to ease the interpretation of the plot. It switches the x and y coordinates around.
-  labs(title = "Mean voting age by Politcal party", 
+  labs(title = "Mean voting age by Political party", 
   subtitle ="* Within Lothian Constituencies",
   x = "Constituency",
   y = "Mean voting age of winning party",
@@ -311,14 +326,30 @@ Meged_data <- merge(..., ..., by.x=..., by.y=...)
 ## This will also use head(). You can choose how many rows you want to display by defining n within head. 
 ## You might also choose to use tail(), which provides the reverse of head().
 
+... %>% 
+  select(..., ..., turnout) %>%
+  group_by(..., ...) %>% #Here we have to group_by the 2 grouping variables our question is interested in.
+  summarise(Mean_turnout= mean(...))  %>%
+  arrange(desc(...)) %>%
+  head(n = ...) # simply define your n to determine how many are displayed
+
+
 # 4. Which party won the most constituency seats? (tip - if using merged dataset here, be sure to remove duplicates, as the gender variable will cause copies so that both male and female are represented)
 
 ## We recommend using select() to choose your variables, group_by(), top_n(n=..., wt=...), distinct() and summary()
+
+... %>%
+  select(..., ..., ...) %>%
+  group_by(....) %>%  # we group by constituency as this is the domain we are interested in. (i.e., political parties win seats in constituencies, so we need to group by constituency).
+    top_n(n= ..., wt = ...) %>% #top_n() can identify highest value across the grouped variable.
+  distinct() %>% #distinct() used to removed duplicates
+  summary(...) # summary at a variable to provide a focused summary. Leave this blank if you want a summary of all selected variables.
 
 
 # 5. Compare mean turnout between winning parties.
 
 ## We recommend using select() to choose your variables, group_by(), top_n(n=..., wt=...), summarise() and arrange().
+### This Q has been left blank to challenge you code by yourself. Solutions are provided if you get stuck!
 
 
 # 6. Create columns showing the percentage of male and female (note that this demography is based on total population, not just electorate, so the total numbers are higher that the total electorate).
@@ -326,23 +357,53 @@ Meged_data <- merge(..., ..., by.x=..., by.y=...)
 ## Step 1 - create updated demography dataset. Here we will need to use group_by(), mutate(), and ungroup().
 ## ungroup() allows us to ensure that our new total variable is usable across the data in its original un-grouped format.
 
+Demog_1 <- Long_Demog %>% 
+  group_by(...) %>% 
+  mutate(total_votes = sum(votes_by_gender))  %>%
+  ungroup() #ungroup() is used so that data is returned to ungrouped format
+
+summary(...)
 
 ## Step 2 - Create a percentage vote by gender variable (mutate() is your friend here)
-
+New_Demog <- Demog_1 %>% 
+  mutate(Percentage_votes_by_gender = (.../...)*100)
 
 # 7. Compare percentage of female population between constituencies.
 
-## Step 1 - update merged dataset
+## Step 1 - update merged dataset, replacing Long_Demog with New_Demog
+
+New_Merged_elec <- merge(Turnout_Elec, ..., by.x="Constituency", by.y="Constit") %>%
+mutate_if(is.character, as.factor) #This is provided to make life easier for remaining Q's.
 
 ## Step 2 - summarise gender and percentage votes, by gender and by constituency.
 ### Functions reccomended: select(), group_by(), summarise(), arrange(), distinct(). 
-### Tip: when using arrange(), use ".by_group=TRUE" command within the function. 
+### Tip: when using arrange(), use ".by_group=TRUE" command within the function. This allows the arrangement to occur within groups, making our data easier to read.
+
+Gender_percentage_by_Constituency <- New_Merged_elec %>%
+  ...(..., ..., Percentage_votes_by_gender) %>%
+  ...(...) %>%
+  ...(Gender = Gender,
+    Percentage_votes_by_gender = Percentage_votes_by_gender)%>%
+  ...(desc(...), .by_group = TRUE) %>% 
+  distinct()
+
+summary(...)
 
 # 8. Compare mean age of population by region between winning parties.
 
 ## Functions reccomended: select(), group_by(), top_n(n=..., wt=...), distinct(), summarise(), arrange().
 ##Remember to arrange by group.
 
+Mean_age_by_region_winning_party <- ... %>%
+  ...(..., ..., ..., ...) %>%
+  ...(...) %>%
+  top_n(n=..., wt = ...) %>% 
+  distinct() %>%
+ ...(Political_Party = Political_Party,
+            Mean_age = Mean_age)%>%
+  ...(desc(...), .by_group = ...) 
+
+view(Mean_age_by_region_winning_party)
 
 # 9. Calculate the mean mean_age across all winning parties
 
@@ -351,6 +412,18 @@ Meged_data <- merge(..., ..., by.x=..., by.y=...)
 ## Functions reccomended: select(), group_by(), top_n(n=..., wt=...), distinct(), summarise(), arrange().
 ##Remember to arrange by group.
 
+Mean_age_by_winning_party <- ... %>%
+  ...(..., ..., ..., ...) %>%
+  group_by(...) %>% #Think carefully about which categorical variable you want to group by first
+  top_n(n=1, wt = ...) %>% 
+  distinct() %>%
+  group_by(...) %>% # Group by the second category here to show greater focus within the hierarchy. 
+  summarise(... = ..., #define the group you want a count of
+            ... = mean(...))%>% # Here we a need a mean of a mean... Just a weird zen concept that we sometimes come across with descriptive statistics.
+  ...(desc(...), .by_group = ...)  %>%
+  distinct()
+
+view(Mean_age_by_winning_party)
 
 # Feel free to play around with this data, or your own, and we can help answer any questions that arise.
 # If you want to play around with plotting/data vis, here's a basic skeleton to experiment with.
