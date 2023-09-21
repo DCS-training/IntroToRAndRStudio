@@ -415,7 +415,7 @@ view(Mean_age_by_region_winning_party)
 Mean_age_by_winning_party <- ... %>%
   ...(..., ..., ..., ...) %>%
   group_by(...) %>% #Think carefully about which categorical variable you want to group by first
-  top_n(n=1, wt = ...) %>% 
+  top_n(n=..., wt = ...) %>% 
   distinct() %>%
   group_by(...) %>% # Group by the second category here to show greater focus within the hierarchy. 
   summarise(... = ..., #define the group you want a count of
