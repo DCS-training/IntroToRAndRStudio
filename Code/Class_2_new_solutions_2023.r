@@ -68,15 +68,15 @@ Merged_elec %>%
 ## We recommend using select() to choose your variables, group_by(), top_n(n=..., wt=...), distinct() and summary()
 
 Merged_elec %>%
-  select(Constituency, Politcal_Party, votes_earned) %>%
+  select(Constituency, Political_Party, votes_earned) %>%
   group_by(Constituency) %>%  # we group by constituency as this is the domain we are interested in. (i.e., political parties win seats in constituencies, so we need to group by constituency).
     top_n(n=1, wt = votes_earned) %>% #top_n() can identify highest value across the grouped variable.
   distinct() %>% #distinct() used to removed duplicates
-  summary(Politcal_Party) # summary at Politcal_Party as we are interested in which party won the most seats. Leave this blank if you want a summary of the other selected variables.
+  summary(Political_Party) # summary at Politcal_Party as we are interested in which party won the most seats. Leave this blank if you want a summary of the other selected variables.
 
 ##Alternative solution using un-merged dataset  
 Turnout_Elec %>%
-  select(Constituency, Politcal_Party, votes_earned) %>%
+  select(Constituency, Political_Party, votes_earned) %>%
   group_by(Constituency) %>%
   top_n(n=1, wt = votes_earned) %>%
   summary() #No need for 'distinct()' if using Turnout_Elec
@@ -87,11 +87,11 @@ Turnout_Elec %>%
 ## We recommend using select() to choose your variables, group_by(), top_n(n=..., wt=...), summarise() and arrange().
 
 Mean_turnout_by_party <- Turnout_Elec %>%
-  select(Constituency, Politcal_Party, votes_earned, turnout) %>%
+  select(Constituency, Political_Party, votes_earned, turnout) %>%
   group_by(Constituency) %>%
   top_n(n=1, wt = votes_earned) %>%
   summarise(Mean_turnout = mean(turnout),
-            Politcal_Party = Politcal_Party) %>%
+            Political_Party = Politcal_Party) %>%
   arrange(desc(Mean_turnout))
 
 view(Mean_turnout_by_party)
@@ -107,7 +107,7 @@ Demog_1 <- Long_Demog %>%
   ungroup() #ungroup() is used so that data is returned to ungrouped format
 
 ## Step 2 - Create a percentage vote by gender variable (mutate() is your friend here)
-New_Demog <- Step1 %>% 
+New_Demog <- Demog_1 %>% 
   mutate(Percentage_votes_by_gender = (votes_by_gender/total_votes)*100)
 
 
@@ -137,11 +137,11 @@ view(Gender_percentage_by_Constituency)
 ##Remember to arrange by group.
 
 Mean_age_by_region_winning_party <- New_Merged_elec %>%
-  select(Constituency, Politcal_Party, Mean_age, votes_earned) %>%
+  select(Constituency, Political_Party, Mean_age, votes_earned) %>%
   group_by(Constituency) %>%
   top_n(n=1, wt = votes_earned) %>% 
   distinct() %>%
-  summarise(Politcal_Party = Politcal_Party,
+  summarise(Political_Party = Political_Party,
             Mean_age = Mean_age)%>%
   arrange(desc(Mean_age), .by_group = TRUE) 
 
@@ -155,12 +155,12 @@ view(Mean_age_by_region_winning_party)
 ##Remember to arrange by group.
 
 Mean_age_by_winning_party <- New_Merged_elec %>%
-  select(Constituency, Politcal_Party, Mean_age, votes_earned) %>%
+  select(Constituency, Political_Party, Mean_age, votes_earned) %>%
   group_by(Constituency) %>%
   top_n(n=1, wt = votes_earned) %>% 
   distinct() %>%
-  group_by(Politcal_Party) %>% # We group by Politcal_Party again here, as we need greater focus within the hierarchy. 
-  summarise(Politcal_Party = Politcal_Party,
+  group_by(Political_Party) %>% # We group by Politcal_Party again here, as we need greater focus within the hierarchy. 
+  summarise(Political_Party = Political_Party,
             Mean_age = mean(Mean_age))%>% # This is the mean(Mean_age). Just a weird zen concept that we sometimes come across with descriptive statistics.
   arrange(desc(Mean_age), .by_group = TRUE)  %>%
   distinct()
