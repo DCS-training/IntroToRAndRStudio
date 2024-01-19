@@ -74,8 +74,8 @@ demo <- iris_set_petal_long %>%
 
 # %>% is the pipe function. It's a tool that allows us to tell R to take what is on the left, and apply the function on the right. It allows us to chain multiple functions, in a way that preserves readability.
 
-deom 
-summary(Demo)
+demo 
+summary(demo)
 
 
 ### Task time
@@ -102,9 +102,13 @@ summary(Demo)
 # This section uses data from the Scottish Parliament Election 2021 and general demographic data. Data was originally taken from House of Commons Library: https://commonslibrary.parliament.uk/research-briefings/cbp-9230/ (accessed 22/03/22) and https://www.nrscotland.gov.uk/statistics-and-data/statistics/statistics-by-theme/population/population-estimates/2011-based-special-area-population-estimates/spc-population-estimates (accessed 28/04/22).
 
 # Tip - go to Session, and Set Working Directory
-read_csv("https://github.com/DCS-training/IntroToRAndRStudio/blob/main/Data/2021_election.csv") # The read_csv() function in 'readr' part of the tidyverse, is the easiest way to do this
+read_csv("") # The read_csv() function in 'readr' part of the tidyverse, is the easiest way to do this
 
-Elec <- read_csv("https://github.com/DCS-training/IntroToRAndRStudio/blob/main/Data/2021_election.csv") # Rather than just seeing a single output, you can assign the data to a variable
+
+Elec_url <- "https://raw.githubusercontent.com/DCS-training/IntroToRAndRStudio/main/Data/2021_election.csv"
+
+
+Elec <- read_csv(url(Elec_url)) # Rather than just seeing a single output, you can assign the data to a variable
 
 View(Elec) # To view the dataframe, or click on the object in the global environment
 
@@ -112,7 +116,9 @@ head(Elec) # head provides the first 5 entries
 summary(Elec) # summary provides a summarised overview of all dataset variables
 
 
-Demog <- read_csv("https://github.com/DCS-training/IntroToRAndRStudio/blob/main/Data/Demography.csv")
+Demog <- read_csv(url("https://raw.githubusercontent.com/DCS-training/IntroToRAndRStudio/main/Data/Demography.csv"))
+
+
 spec(Demog) # spec() without _csv can also be used for dataframe objects in the working environment
 
 
@@ -252,12 +258,12 @@ Long_Demog <- Demog %>%
          Constit = as.factor(Constit)) #Transforming our Gender and Consitit variables to be categorical again.
 
 summary(Long_Demog)
+head(Long_Demog)
 
-Merged_elec <- merge(Turnout_Elec, Long_Demog, by.x="Constituency", by.y="Constit")  %>% mutate_if(is.character, as.factor)
-
-Merged_elec <- merge(Elec, Demog, by.x="Constituency", by.y="Constit") %>% mutate_if(is.character, as.factor) #%>% distinct()
+Merged_elec <- merge(Turnout_Elec, Long_Demog, by.x="Constituency", by.y="Constit")  %>% mutate_if(is.character, as.factor) 
 
 summary(Merged_elec)
+head(Merged_elec)
  # We covered the merge function last week, but we can go over the arguments again and use the ability to subset data.
 
 
@@ -268,7 +274,7 @@ summary(Merged_elec)
 #But for now, here is a detailed  example of what would be a very complicated task if it weren't for pipes:
 
 #Step 1 - This is the tricky part: summarising our data to get the values we want. We will cover these steps in the tasks below.
-Lothian_winning_parties <- New_Merged_elec %>%
+Lothian_winning_parties <- Merged_elec %>%
   select(Constituency, Politcal_Party,
          Mean_age, votes_earned, Region) %>%
   group_by(Constituency) %>%
@@ -276,21 +282,23 @@ Lothian_winning_parties <- New_Merged_elec %>%
   distinct() %>%
   summarise(Politcal_Party = Politcal_Party,
             Region = Region,
-            Mean_age = Mean_age)%>%
+            Mean_age = Mean_age) %>%
   filter(Region == "Lothian") %>% 
   arrange(desc(Mean_age), .by_group = TRUE) 
 
 # Step 2 - This is the easier part, creating the plot)
-ggplot(Lothian_winning_partie, 
+ggplot(Lothian_winning_parties, 
        aes(fill = Politcal_Party, y = Mean_age, x = fct_reorder(Constituency, Mean_age))) + # This first stage of the plot is to tell R which variables we are interested in. 
   geom_col()+ #We use geom to select our plot style. Note that geom_col cannot plot categories on its y axis.
-  coord_flip() + # Coord_flip switches the x and y coordinates around.
+  scale_fill_manual(breaks = c("LAB", "LD", "SNP"), values = c("red", "orange", "yellow" )) + # setting colours to match political parties 
+  coord_flip(ylim = c(16, 40)) + # Coord_flip switches the x and y coordinates around. Zooming in with ylim to reflect minimum voting age in scotland. 
   labs(title = "Mean voting age by Politcal party", 
   subtitle ="* Within Lothian Constituencies",
-  x = "Constituency",
+  x = "",
   y = "Mean voting age of winning party",
-  fill = "Political Party")  # Here we use labs to create new labels for our plot.
-  
+  fill = "Political Party") + # Here we use labs to create new labels for our plot. 
+  theme_minimal() +
+  theme(legend.position = "bottom") 
 
 # ==== Research Questions ====
 # Let's try and answer some questions about the election data, by using some of the data wrangling techniques we have seen today.
