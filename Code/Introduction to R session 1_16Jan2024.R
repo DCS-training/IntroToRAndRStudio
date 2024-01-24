@@ -4,6 +4,7 @@
 # This is the interface you are going to get used to
 
 # We have four main windows- console, environment/history, files/plots and the source window.
+
 # The source window shows the file or object you are currently viewing
 
 # The current file is an RScript
@@ -16,13 +17,15 @@
 
 ### This is a level 3 header. ------------------------------
 
+# I'm writing of what I'm doing
+
 # You can change the visualisation by going to 'Tools > Global Options'
 # Use the Soft-wrap R Source files with 'Tools > Global Options > Code > Editing' to prevent text running off screen
 
 # #### Basic Operations and Syntax ####
 
 # ==== Calculations and Operators ====
-1+1 # Use 'ctrl+Enter' to run the code on the selected line in the source, or type it out in the console
+1+9 # Use 'ctrl+Enter' to run the code on the selected line in the source, or type it out in the console
 8*5
 11/6
 
@@ -34,7 +37,9 @@
 # ==== Functions ====
 # Functions can also be used to generate sequences with more control.
 seq(10) # Print numbers from 1 to 10
-seq(30, 0, by = -3) # Print numbers from 30 to 0 every 3 (note '-' will count down)
+seq(from = 30, to = 0, by = -3) # Print numbers from 30 to 0 every 3 (note '-' will count down)
+
+seq(from = 100, to = 20, by = -10)
 
 # Functions follow the basic syntax of R. Many require inputs/arguments to perform certain tasks
 
@@ -47,7 +52,9 @@ seq(30,0,-3) # This produces the same result as above, as the order of arguments
 
 c(6,7,8,9,10) # c() is a function that combines arguments into a single output
 
-c(6,7,8,9,10, seq(30,0,-3)) # functions can themselves be combined. Note seq() is an argument of c() in this example
+6,7,8,9,10
+
+c(6,7,8,9,10, seq(30,2,-5)) # functions can themselves be combined. Note seq() is an argument of c() in this example
 # Functions require inputs with (brackets). Remember to open and close. Note seq() is entirely within c() above
 
 # ==== Variables ====
@@ -55,11 +62,14 @@ c(6,7,8,9,10, seq(30,0,-3)) # functions can themselves be combined. Note seq() i
 x <- 1:5 # Puts the numbers between 1-5 into the variable x
 x # Displays the values we have set in x. x should appear in your environment window
 
-Y <- 1+1
+Y <- 3
 Y
 
 y <- 5*5
 y
+
+x * Y
+
 
 # 'Alt+-' shortcut for <-, to create an assignment statement
 # R is case sensitive, 'y' is not the same as 'Y'
@@ -89,10 +99,19 @@ x*2 # multiply each number in x by 2
 ### Task time ### 
 
 #1) Assign the value of 10 to "x"
+
+x <- 10
+
+x
+
 #2) Assign the values of 2,3,5,7 and 11 to "y"
+
+y <- c(2,3,5,7,11)
+y
 #3) Divide "y" by "x", and assign the value to "z"
 
-
+z <- y/x
+z
 
 
 
@@ -113,7 +132,7 @@ help(ls) # Using help(), we can breakdown what 'rm(list = ls())' is actually doi
 
 
 # ==== Data types ====
-print('Hello World!') # Prints 'Hello World!' in the console
+print("Hello World!") # Prints 'Hello World!' in the console
 print(1+1)
 print('1+1')
 
@@ -121,10 +140,10 @@ print('1+1')
 
 Numeric   <- c(1, 2, 3) # A numeric object
 Character <- c("a", "b", "c") # A character object
-Logical   <- c(T, F, T) # A logical/boolean object
+Logical   <- c(T, F, T, F, F, F, T) # A logical/boolean object
 
 # The type of data can be changed using as.() functions
-T_F_Character <- as.character(c(T, F, T))
+T_F_Character <- as.numeric(Numeric)
 
 Numeric   <- c(1.3, 2.7, 3.9)
 Integer <- as.integer(c(1.3, 2.7, 3.9)) # Note, as.integer() does not round
@@ -141,6 +160,7 @@ A_B_C_Numeric <- as.numeric(c("a", "b", "c"))
 # ==== Vector ====
 # One dimensional collection of data
 y <- c(6,7,8,9,10)
+y
 is.vector(y) # is.vector() tests if an input object is a vector and returns a logical TRUE or FALSE.
 is.numeric(y)
 
@@ -182,9 +202,12 @@ df1 <- c(Numeric, Character, Logical)
 df1  # c() Coerces all values to most basic data type, in this case, character
 str(df1) # str() checks the structure - here we can see that df1 has a chr format
 
+
 df2 <- data.frame(Numeric, Character, Logical)
 df2  # Makes a data frame with three different data types
 str(df2) # After creating a dataframe, str() provides the format for each seperate column/variable
+summary(df2)
+
 
 # Clear Workspace
 rm(list = ls())
@@ -198,12 +221,17 @@ Numeric3 <- 251:300
 
 df1 <- data.frame(Numeric1,Numeric2,Numeric3) # Create a dataframe
 df1
+head(df1)
+tail(df1)
+summary(df1)
+
 
 df2 <- df1*2 # Multiply all values in a dataframe by 2
 df2
-
+summary(df2)
 df3 <- df1 + df2 # Sum all values in two dataframes
 df3
+summary(df3)
 
 # ---- The merge() Function and Dataframes ----
 Numeric <- as.numeric(c(73, 32, 75, 77))
@@ -272,6 +300,11 @@ library(tidyverse)
 ## These packages come with ready made datasets to play around with, and some very useful functions for making our data analysis easier.
 summary(mtcars)
 
+mtcars %>% filter(hp > 62) %>% summary(mtcars)
+
+ggplot(mtcars, aes(x= cyl, y = mpg)) +
+  geom_point() +
+  facet_wrap(~gear)
 
 # Tidyverse functions
 
@@ -280,7 +313,8 @@ df5
 
 ## Using select to choose our variables for a new dataframe
 Led_Zeppelin <- df5 %>% 
-  select (First_Name, Surname, Age, Sigil, Instrument) 
+  select (First_Name, Surname, Age, Sigil, Instrument)
+
 Led_Zeppelin
 
 ## Using filter to specify values for a dataframe
@@ -293,10 +327,12 @@ Jimmy_Page
 ?mtcars 
 
 # Using mutate to change a variable.
+summary(mtcars)
 
 mtcars_new <- mtcars %>%
   mutate(am = as.factor(am)) 
 
+summary(mtcars_new)
 
 # ggplot example
 ggplot(data = mtcars_new, 
@@ -319,7 +355,7 @@ data() # Use to see available preloaded datasets
 summary(iris) # use this to identify variables
 
 ggplot(data = iris, # Specify the data
-       aes(x = ..., y = ..., color = ...) ) + # specify the coordinates
+       aes(x = Sepal.Width, y = Petal.Width,  color = Sepal.Length) ) + # specify the coordinates
   geom_point() + # geom_point creates a scatter plot. Other plot options are available and can be found by googling "geom plots". 
   theme_classic() + # There are multiply themes to play with
   labs( x = "...",
