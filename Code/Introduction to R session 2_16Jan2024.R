@@ -89,6 +89,79 @@ summary(demo)
 # Task 4 - Find the species with the largest "Sepal.Area". 
 
 
+# Analysis examples
+
+## T test
+summary(mtcars)
+
+#### Step 1 - define model
+t <- t.test(mpg ~ am, mtcars) # default is Welch (assumes unequal variance - which is likely for humanities/social science data)
+
+#### Step 2 - view results
+t
+
+#### Step 3 - summary stats for reporting
+mtcars %>% 
+  mutate(am = as.factor(am)) %>%
+  group_by(am) %>% 
+  summarise(
+    n = n(),
+    mean_mpg = mean(mpg),
+    sd_mpg = sd(mpg)
+  )
+
+
+## ANOVA 
+#### step 1 - defining analysis
+m <- aov(Petal.Width ~ Species, iris)
+
+#### Step 2 - view results of analysis
+m 
+summary(m)
+
+#### Step 3 - assumption checks (just some examples)
+shapiro.test(m$residuals)
+plot(m)
+
+#### Step 4 - post hoc tests (if significant)
+library(DescTools) # Remember to install package if needed
+PostHocTest(m, 
+            method = "bonferroni",
+            conf.level = .95)
+
+#### Step 5 - summary statistics (for reporting)
+iris %>% 
+  group_by(Species) %>%
+  summarise(n = n(),
+            mean_Petal.Width = mean(Petal.Width),
+            sd_Petal.Width = sd(Petal.Width)
+            ) %>% view()
+
+## Regression
+#### step 1 - defining analysis
+m <- lm(Petal.Width ~ Species + Petal.Length, iris)
+
+#### Step 2 - view results of analysis
+
+summary(m)
+
+#### Step 3 - assumption checks (just some examples)
+
+plot(m)
+
+#### Step 4 - summary statistics
+
+iris %>% 
+  group_by(Species) %>%
+  summarise(n = n(),
+            mean_Petal.Width = mean(Petal.Width),
+            sd_Petal.Width = sd(Petal.Width),
+            mean_Petal.Length = mean(Petal.Length),
+            sd_Petal.Length = sd(Petal.Length)
+  ) %>% view()
+
+
+
 
 
 
