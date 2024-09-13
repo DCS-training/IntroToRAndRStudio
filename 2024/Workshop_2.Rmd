@@ -220,7 +220,7 @@ Our data is tidied, and has been saved. It's time to address our research questi
 
 The aim here is to give you a basic overview of conducting statistical analyses in R. Be aware that it can do sooooo much more. 
 
-The [easystats package and resources](https://easystats.github.io/easystats/) are a great place to look for beginner friendly stats in R.
+The [easystats package and resources](https://easystats.github.io/easystats/) are a great place to look for conducting beginner friendly stats in R.
 
 ### Does penguin weight differ by sex?
 
