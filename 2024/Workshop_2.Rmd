@@ -156,8 +156,6 @@ However, when working with small samples, the use of imputation methods may stil
 
 If you do want more guidance on this very geeky but very important area of data analysis, I suggest finding the [Applied Missing data analysis](https://ebookcentral.proquest.com/lib/ed/detail.action?docID=533872) textbook by Craig Enders. 
 
-## 10 min Break Time
-
 ### Treating our data
 
 We have now identified our missing data, and inspected our variables for outliers and their distributions. It's time to process our data to get it ready for analysis!
@@ -214,6 +212,7 @@ Time to run our code and save our data.
 #           "tidy_data.csv" # the file name
 #           )
 ```
+## 10 min Break Time
 
 ## Analysis Time
 
