@@ -21,9 +21,9 @@ When you click the **Knit** button a document will be generated that includes bo
 summary(cars)
 ```
 
-We love using R markdown for running workshops, as it provides a clear distinction between our notes and our code. This makes our documents easier to follow, and allows to make additional notes within the document. With more experience, R markdown also allows you to generate publication ready analyses documents - these can be in Word, pdf or even html formats. It also possible to use R markdown to generate presentations, and web pages.
+We love using R markdown for running workshops, as it provides a clear distinction between our notes and our code. This makes our documents easier to follow, and allows us to make additional notes within the document. With more experience, R markdown also allows you to generate publication-ready analysis documents - these can be in Word, pdf or even html formats. It is also possible to use R markdown to generate presentations and web pages.
 
-Using R markdown is an incredible communication too. As a bonus, it saves us time in reporting our stats and helps reduce risks of accidentally reporting errors. All the while, it's in a reproducible format.
+Using R markdown is an incredible communication tool. As a bonus, it saves us time in reporting our stats and helps reduce risks of accidentally reporting errors. All the while, it's in a reproducible format.
 
 You'll notice that the file has the `Source` and `Visual` options. `Source` allows you to see the document in its markdown format (with hashtags used to generate headers, and stars used to *italicise* and **Bolden** the font).
 
@@ -39,19 +39,19 @@ For a more detailed overview, you can visit the [R Studio User Guide](https://do
 
 ## The Source Panel
 
-We are currently in the source panel, which is showing the Rmarkdown document we are working with (more on R markdown in a bit!). The source panel is used to work with your documents. It allows us to work with a variety of coding documents, and from here we can edit and run our code. By default, the source window is displayed in the top left corner. Every time we open a new file, it adds an addition tab to the Source Panel.
+We are currently in the source panel, which is showing the R Markdown document we are working with. The source panel is used to work with your documents. It allows us to work with a variety of coding documents, and from here we can edit and run our code. By default, the source window is displayed in the top left corner. Every time we open a new file, it adds an additional tab to the source panel.
 
 ## The Environment panel
 
-By default, the Enviornment panel is in the top-right of R Studio. It includes the Environment, History, Connections, and Tutorial Tabs.
+By default, the environment panel is in the top right of R Studio. It includes the Environment, History, Connections, and Tutorial tabs.
 
 ### Environment tab
 
-The **Environment** tab displays our coded objects from the current system. For example, if we run the following code,R will add the `a`, `b` and `Wow` objects to the environment for the rest of this working session (running the code is done either by clicking the green play button, or using `ctrl`/`command` + `Enter` next to the code line).
+The **Environment** tab displays our coded objects from the current system. For example, if we run the following code, R will add the `a`, `b` and `Wow` objects to the environment for the rest of this working session (running the code is done either by clicking the green play button, or using `ctrl`/`command` + `Enter` next to the code line).
 
-Objects are anything that we assign data, functions, or lists to. These objects can then be used when we need by running their code again, and can have factors assigned to them.
+Objects are anything that we assign data, functions, or lists to. These objects can then be used again when we need them.
 
-The data can be numerical, categorical or character based. You can also store
+The data can be numerical, categorical or character based.
 
 ```{r}
 a <- 3
@@ -59,10 +59,10 @@ b <- c(0,1,2,3)
 c <- seq(from = 0, to = 24, by = 8)
 d <- rbind(b, c) 
 Wow <- "This course is amazing!!"
-`Is_it?` <- TRUE
+`Is it?` <- TRUE # the backticks here allow you to include punctuation and spaces in your object names
 ```
 
-### Other environment uses.
+#### Other environment uses
 
 The environment tab can also be used to import data, to select other programming languages, and to display how much memory your current R session is using. There is also the broom button to clear objects from the workspace.
 
@@ -135,7 +135,7 @@ A very useful tab. The Help tab has a search tool, that allows us to look up fun
 
 ## Task Time
 
--   Using the **Packages** tab, install `tidyverse`.
+-   Using the **Packages** tab, install `tidyverse`. You can also do this in a code chunk by typing `install.packages("tidyverse")`.
 -   Run the `library(tidyverse)` command to load the `tidyverse` functions
 -   Create your own code chunk! 
 -   Use Help to look up `summary`, `ggplot`, and `summarise`.
