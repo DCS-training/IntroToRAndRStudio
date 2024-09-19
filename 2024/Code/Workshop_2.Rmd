@@ -60,7 +60,7 @@ The Penguins dataset is loaded to your workspace when you run the library comman
  
 ```{r data_upload, echo = FALSE}
 library(readr)
-penguins <- read_csv("Data/penguins.csv")
+penguins <- read_csv("../Data/penguins.csv")
 
 ```
 
