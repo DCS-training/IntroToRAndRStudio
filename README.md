@@ -1,10 +1,10 @@
 # Intro To R and RStudio
 
-Hello Everyone! This is the Readme File for the Intro to R and R Studio Course (delivered by the Centre in September/October 2023).
+Hello Everyone! This is the Readme File for the Intro to R and R Studio Course.
 
 This workshop focused on how to start working with R and R studio and getting familiar with its interface and commands.
 
-The material in this repo was developed and curated by Rhys Davies and Lucia Michielin.
+Rhys Davies and Lucia Michielin developed and curated the material in this repo.
 
 ## What you are going to find in this repo
 
