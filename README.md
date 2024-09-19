@@ -7,12 +7,13 @@ This workshop focused on how to start working with R and R studio and getting fa
 Rhys Davies and Lucia Michielin developed and curated the material in this repo.
 
 ## What you are going to find in this repo
+Within each year's folder, you will find: 
 
-- Getting Ready with R.pdf (installation instructions for R and R Studio, and the Noteable Service)
-- Code Folder (the code used in the two classes)
-- Data Folder (the dataset used in the two classes)
+- A code folder (the code used in the two classes)
+- A data folder (the dataset used in the two classes)
 - Introduction to R and RStudio.pptx (a short introductory presentation)
-
+  
+Please make sure to use the most recent version. The current version is `2024`
  
 ## Installing R and R Studio
 ### For R On Noteable
