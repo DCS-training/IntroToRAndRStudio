@@ -22,12 +22,14 @@ Please make sure to use the most recent version. The current version is `2024`
 2. Login with your EASE credentials
 3. Select RStudio as a personal notebook server and press start
 4. Go to File > New Project> Version Control > Git
-5. Copy and Paste this repository URL [https://github.com/DCS-training/Null-Hypothesis-Testing-With-R](https://github.com/DCS-training/Null-Hypothesis-Testing-With-R) as the Repository URL (The Project directory name will be filled in automatically but you can change it if you want your folder in Notable to have a different name).
+5. Copy and Paste this repository URL [https://github.com/DCS-training/IntroToRAndRStudio](https://github.com/DCS-training/IntroToRAndRStudio) as the Repository URL (The Project directory name will be filled in automatically but you can change it if you want your folder in Notable to have a different name).
 6. Decide where to locate the folder. By default, it will locate it in your home directory
 7. Press Create Project
 Congratulations you have now pulled the content of the repository on your Notable server space.
 
 ### Install it locally
+
+#### If you have administrative rights of your laptop 
 1. Go to (https://www.r-project.org/)[https://www.r-project.org/]
 2. Go to the download link
 3. Choose your CRAN mirror nearer to your location (either Bristol or Imperial College London)
@@ -39,6 +41,10 @@ Congratulations you have now pulled the content of the repository on your Notabl
 7. Go in download
 8. Download the correspondent version depending on your Operating system and install it. If you get stuck check the videos linked above. 
 
-
+#### If you have a UoE managed desktop
+1. Go to the software centre (press the up arrow on the bottom bar of Windows and double-click on the Software Centre app)
+2. Search for RStudio in the search bar 
+3. Install the R 4.4.1(with RStudio 2024.04.2)
+NB this will take quite some time so make sure to do it ahead of the first class
 
 All material collected here is free to use but is covered by a License: [![License: CC BY-NC 4.0](https://licensebuttons.net/l/by-nc/4.0/80x15.png)](https://creativecommons.org/licenses/by-nc/4.0/) license
