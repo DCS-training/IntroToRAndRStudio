@@ -60,7 +60,9 @@ The Penguins dataset is loaded to your workspace when you run the library comman
  
 ```{r data_upload, echo = FALSE}
 library(readr)
-penguins <- read_csv("../Data/penguins.csv") # because our home folder is Code we need to use the two .. to go back to the 2024 folder and then into the Data one
+penguins <- read_csv(url("https://raw.github.com/DCS-training/IntroToRAndRStudio/main/2024/Data/penguins.csv")) # This is code that takes the dataset from github. 
+
+penguins <- read_csv("penguins.csv") # This is code that takes the dataset from our working directory
 
 ```
 
