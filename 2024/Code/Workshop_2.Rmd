@@ -185,7 +185,8 @@ tidy_data <- penguins %>% # creating new object, so that our raw data is safe.
            flipper_length_Z < 3, # We can also filter on numerical values
            flipper_length_Z > -3 # This approach is to remove potential extreme values based on Z score. Here we have asked R to remove values IF they are GREATER than 3 sd from the mean, or less than 3 sd from the mean. 
            ) %>% 
-  rename("row_id" = `...1`) # renaming the weird first column of row numbers, the syntax for `rename()` is new_name = old_name
+  rename("row_id" = `...1`) %>%  # renaming the weird first column of row numbers, the syntax for `rename()` is new_name = old_name
+ mutate(across(where(is.character), ~ as.factor(.))) # converting all character variables to factors. Very useful code to know.
 
 summary(tidy_data) # always produce a summary of your data after tidying - check if at all makes sense.
 ```
