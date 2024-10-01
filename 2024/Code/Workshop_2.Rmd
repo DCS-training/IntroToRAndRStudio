@@ -14,8 +14,19 @@ library(naniar) # Allows for quick and easy investigations of missing data.
 library(gt) # Make pretty tables
 library(easystats) # Package that makes statistical analyses much easier
 library(broom) # Extract summary stats from statistical models
-# OR
+
+# OR use the following code. 
+
+## The pacman::p_load() function will check to see if a package has been installed before running a library() command. This is very useful as it only runs the installation if it is needed. You do need to install pacman first first though with: install.packages('pacman').
+
+pacman::p_load(palmerpenguins)
 pacman::p_load(tidyverse)
+pacman::p_load(naniar)
+pacman::p_load(gt)
+pacman::p_load(easystats)
+pacman::p_load(broom)
+
+
 ```
 
 Welcome back! I hope you are all ready to continue on our R journey. Today, we are looking to build on our foundations from last week, and to provide you with the tools to use R for conducting and communicating your own research. 
