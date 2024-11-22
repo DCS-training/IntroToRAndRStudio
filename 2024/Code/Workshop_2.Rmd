@@ -3,103 +3,139 @@ title: "Introduction to R and RStudio- Class 2 "
 author: "Rhys Davies  & Aislinn Keogh"
 date: "`r Sys.Date()`"
 output: html_document
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
-
-
 
 ```{r}
 library(palmerpenguins) # Contains the Palmer Penguin dataset.
 library(tidyverse) # Contains multiple very useful packages for data tidying and visualisation. Essential for almost any project.
-library(naniar) # Allows for quick and easy investigations of missing data.
 library(gt) # Make pretty tables
 library(easystats) # Package that makes statistical analyses much easier
-library(broom) # Extract summary stats from statistical models
 
 # OR use the following code. 
+
 
 ## The pacman::p_load() function will check to see if a package has been installed before running a library() command. This is very useful as it only runs the installation if it is needed. You do need to install pacman first first though with: install.packages('pacman').
 
 pacman::p_load(palmerpenguins)
 pacman::p_load(tidyverse)
-pacman::p_load(naniar)
 pacman::p_load(gt)
 pacman::p_load(easystats)
-pacman::p_load(broom)
-
 
 ```
 
-Welcome back! I hope you are all ready to continue on our R journey. Today, we are looking to build on our foundations from last week, and to provide you with the tools to use R for conducting and communicating your own research. 
+Welcome back! I hope you are all ready to continue on our R journey.
+Today, we are looking to build on our foundations from last week, and to
+provide you with the tools to use R for conducting and communicating
+your own research.
 
-We will be working with the amazing [PalmerPenguins](https://allisonhorst.github.io/palmerpenguins/) dataset today. This data was collected by Allison Horst and their team, and investigated the physiological attributes of 3 penguin species from 3 different islands. 
+We will be working with the amazing
+[PalmerPenguins](https://allisonhorst.github.io/palmerpenguins/) dataset
+today. This data was collected by Allison Horst and their team, and
+investigated the physiological attributes of 3 penguin species from 3
+different islands.
 
-Our incredibly technical research questions for today are:
-
-* Does penguin weight differ by sex?
-* Does penguin flipper length differ by species?
-* Does penguin flipper length differ by island?
-* To what extent does penguin flipper length predict penguin weight?
 
 ### Learning aims
 
-We will work through the research questions to guide us through our own learning aims for today:
+We will work through the research questions to guide us through our own
+learning aims for today:
 
-- Uploading data.
-- Getting to know the tidyverse.
-- Making the pipe your best friend.
-- Using R to tidy and filter our data.
-- Saving our tidied data with R.
-- Summarising data with R.
-- Simple stats with R (ANOVA and correlation)
-- Creating pretty plots with R.
-- Knitting our work into a word document.
+-   Uploading data.
+-   Getting to know the tidyverse.
+-   Making the pipe your best friend.
+-   Using R to tidy and filter our data.
+-   Saving our tidied data with R.
+-   Summarising data with R.
+-   Creating pretty plots with R.
+
 
 ## Uploading data
 
-We have our research questions. And we have our learning aims. Lets crack on with the important first step of data analysis: uploading our data!
+We have our research questions. And we have our learning aims. Lets
+crack on with the important first step of data analysis: uploading our
+data!
 
-The Penguins dataset is loaded to your workspace when you run the library command. This makes the dataset nice and user friendly to get our head around playing with data. However, when it comes to our own work (tragically non-penguin related), we need to know how to upload our own data. This can seem like a daunting aspect of R, which is a shame as it is the very first step of any analysis. But not to worry, we are going to guide you through it:
+The Penguins dataset is loaded to your workspace when you run the
+library command. This makes the dataset nice and user friendly to get
+our head around playing with data. However, when it comes to our own
+work (tragically non-penguin related), we need to know how to upload our
+own data. This can seem like a daunting aspect of R, which is a shame as
+it is the very first step of any analysis. But not to worry, we are
+going to guide you through it:
 
- 1. Download the `penguins.csv` file from github.
- 2. For small projects, it is good practice to keep your data in the same folder as your code, so we recommending moving it there. (For larger projects with many data files, you may want to keep code and data in separate subfolders)
- 3. Back in R, click the `Session` tab at the top, then `Set Working Directory`, then click `To Source File Location`. This step helps R identify where our data and code are kept, and is an important step to create word, pdf, and html documents from R. As you get more advanced with R, you may also hear about R Projects - these are another way to manage your files and folders. 
- 4. Find the `Environment` panel, and click on the `Import Dataset` tab. 
- 5. From there, click `From Text (readr)...`. (We can also upload excel, SPSS, SAS and STATA data files from here as well).
- 6. Go to `Browse`, find your `penguins.csv` file, and select it.
- 7. Bonus tip - copy the code from the `Code Preview` box, and paste into the code chunk below. This way, you wont need to repeat the last 3 steps when you want to re-run your analysis.
- 8. Click `Import`. 
- 
+1.  Download the `penguins.csv` file from github.
+2.  For small projects, it is good practice to keep your data in the
+    same folder as your code, so we recommending moving it there. (For
+    larger projects with many data files, you may want to keep code and
+    data in separate subfolders)
+3.  Back in R, click the `Session` tab at the top, then
+    `Set Working Directory`, then click `To Source File Location`. This
+    step helps R identify where our data and code are kept, and is an
+    important step to create word, pdf, and html documents from R. As
+    you get more advanced with R, you may also hear about R Projects -
+    these are another way to manage your files and folders.
+4.  Find the `Environment` panel, and click on the `Import Dataset` tab.
+5.  From there, click `From Text (readr)...`. (We can also upload excel,
+    SPSS, SAS and STATA data files from here as well).
+6.  Go to `Browse`, find your `penguins.csv` file, and select it.
+7.  Bonus tip - copy the code from the `Code Preview` box, and paste
+    into the code chunk below. This way, you wont need to repeat the
+    last 3 steps when you want to re-run your analysis.
+8.  Click `Import`.
+
 ```{r data_upload, echo = FALSE}
 library(readr)
-penguins <- read_csv(url("https://raw.github.com/DCS-training/IntroToRAndRStudio/main/2024/Data/penguins.csv")) # This is code that takes the dataset from github. 
+penguins <- read_csv(url("https://raw.github.com/DCS-training/IntroToRAndRStudio/main/2024/Data/penguins.csv")) # because our home folder is Code we need to use the two .. to go back to the 2024 folder and then into the Data one
 
 penguins <- read_csv("penguins.csv") # This is code that takes the dataset from our working directory
 
 ```
 
-Congratulations! You have uploaded your dataset into R. Now it's time to prepare our data for analysis.
+Congratulations! You have uploaded your dataset into R. Now it's time to
+prepare our data for analysis.
 
 ## Data Tidying in R
 
-Data tidying has a bad rep. It is perceived as long and tedious. It's also a space where you have to carefully track your steps, so you can ensure that your analysis is reproducible and reliable. This is an area where R thrives. Using the `Tidyverse` functions, we have a variety of very useful tools to ease up our tidying workflow. The function names are descriptive, and the ability to comment with `#` in the code chunks and write notes in the markdown document makes our tidying script a logbook of our steps. 
+Data tidying has a bad rep. It is perceived as long and tedious. It's
+also a space where you have to carefully track your steps, so you can
+ensure that your analysis is reproducible and reliable. This is an area
+where R thrives. Using the `Tidyverse` functions, we have a variety of
+very useful tools to ease up our tidying workflow. The function names
+are descriptive, and the ability to comment with `#` in the code chunks
+and write notes in the markdown document makes our tidying script a
+logbook of our steps.
 
-My top tip for any of you starting your data collection is to use the early stages as an opportunity to build and develop your R skills through data tidying. It may feel like a steep learning curve to begin with, but every step you work through now will save you mountains of time in the future. Your raw data will remain raw, and so you don't need to worry about accidentally vandalising it. And the ability to save your data means you can instantly use it in any way you like in the future - even if that means using Excel or SPSS to do a step you can't do in R (we won't judge... too much...). It is well worth the investment of time, and there is plenty of help online. 
+My top tip for any of you starting your data collection is to use the
+early stages as an opportunity to build and develop your R skills
+through data tidying. It may feel like a steep learning curve to begin
+with, but every step you work through now will save you mountains of
+time in the future. Your raw data will remain raw, and so you don't need
+to worry about accidentally vandalising it. And the ability to save your
+data means you can instantly use it in any way you like in the future -
+even if that means using Excel or SPSS to do a step you can't do in R
+(we won't judge... too much...). It is well worth the investment of
+time, and there is plenty of help online.
 
 ### Inspecting our data
 
-Before tidying our data, we need to know our data (Zen and the Art of Data Tidying). Let's use R to help us know our data. We will do in this two stages. First with the data itself. And second through visual methods.
+Before tidying our data, we need to know our data (Zen and the Art of
+Data Tidying). Let's use R to help us know our data. We will do in this
+two stages. First with the data itself. And second through visual
+methods.
 
-Things to look out for:
-* Presence of NA's
-* Strange values
-* Is data correctly structured
+Things to look out for: \* Presence of NA's \* Strange values \* Is data
+correctly structured
 
 ```{r}
 view(penguins) # Lets us view the entire dataset. Not advised for large data.
 head(penguins) # Lets us view the first 6 rows
-tail(penguins) # Lets us view the last 6 rows
+tail(penguins, n = 8) # Lets us view the last 6 rows
 summary(penguins) # Provides an overview of all our variables
 str(penguins) # Get an oveview of the data structure 
+glimpse(penguins) 
 ```
 
 ```{r}
@@ -108,76 +144,34 @@ hist(penguins$flipper_length_mm)
 boxplot(penguins$flipper_length_mm)
 ```
 
-### Task time 1
+## Task time 1
 
-* Using `summary()` and `str()` identify variables with NA
-* Identify if all variables are correctly structured.
-* Use `hist()` and `boxplot()` to check the distribution of `body_mass_g`.
-
-```{r}
-
-```
-
-
-### Working with NA
-
-NA's can be very pesky. We need to be very careful and ensure we make an informed decision about how treat NA's, as any decision we make has the potential to bias our data. Thankfully, R has plenty of amazing packages to make this step of understanding and treating our NA's much easier. My favorite is the `naniar` package, as it allows for easy visualisation of our missing data. Here is [their guide on inspecting missing data](https://naniar.njtierney.com/), and here is their [gallery of visualising missing data](https://naniar.njtierney.com/articles/naniar-visualisation.html).
+-   Using `summary()` and `str()` identify variables with NA
+-   Identify if all variables are correctly structured.
+-   Use `hist()` and `boxplot()` to check the distribution of
+    `body_mass_g`.
 
 ```{r}
-#statistical summaries
-pct_miss(penguins) # overall percentage of missing data
-miss_case_summary(penguins) # summary of missing data per row/individual penguin
-miss_var_summary(penguins) # summary of missing data per variable 
-mcar_test(penguins) # Determines if there is a pattern to missing data.  
+summary(penguins)
+glimpse(penguins)
+hist(penguins$body_mass_g)
+boxplot(penguins$body_mass_g)
 ```
 
-So in these steps we learn some very important information to inform our missing data treatment.
-
-1. There is a very low percentage of missing data.
-2. Majority of data is missing in the sex variable - but even here only 3.2% of the data is missing.
-3. The MCAR test is not significant. This test essentially runs logistic regressions to determine if variables in the dataset can significantly predict whether or not a variable is missing. As p = .24, we can infer that there is no significant pattern in the data that informs the presence of missing data. 
-
-Before making any additional decisions, we need to visualise our data as well, as this can provide further insight on any potential patterns in the data.
-
-```{r}
-# visual summaries
-vis_miss(penguins) # Grid overview of presence of missing data
-
-gg_miss_upset(penguins) # Shows all instances of where missing data arises and overlaps
-
-gg_miss_fct(x = penguins, fct = sex) # Visualise missing data by factor
-```
-
-```{r}
-# More advanced visualisation method - very useful to see potential patterns across multiple variables
-
-ggplot(data = penguins, # setting data
-       aes(x = flipper_length_mm, y = body_mass_g)) + #setting variables
-  geom_miss_point(position = "jitter") + # creates a scatter plot, coloured by whether data is missing or not
-  facet_grid(~species ~ island ~ sex) + # Divides plot by the selected categorical variables
-  theme_dark() +# setting a dark theme, to allow for clearer interpretation of plot
-  labs(title = "Missing data visualisation")
-```
-
-#### Interpreting the missing data
-
-What can we see from our plots?
-
-#### Missing data decisions
-
-As the missing data is below 5%, and that MCAR test suggests no pattern to the missing data, it's looking like we can justify the removal of the missing values without biasing our analysis - which is what we will do today. This is partially motivated to justify the demonstration of t-tests in R.
-
-However, when working with small samples, the use of imputation methods may still be recommended, as the removal of missing values can bias our analyses. However, imputation itself is a very heavy topic, and so we are simplifying our steps today to stick to make learning R easier. 
-
-If you do want more guidance on this very geeky but very important area of data analysis, I suggest finding the [Applied Missing data analysis](https://ebookcentral.proquest.com/lib/ed/detail.action?docID=533872) textbook by Craig Enders. 
 
 ### Treating our data
 
-We have now identified our missing data, and inspected our variables for outliers and their distributions. It's time to process our data to get it ready for analysis!
+We have now identified our missing data, and inspected our variables for
+outliers and their distributions. It's time to process our data to get
+it ready for analysis!
 
-Here we will make use of the `dplyr` tools from the `tidyverse` family of packages. You can learn more about the useful tools [here](https://dplyr.tidyverse.org/articles/dplyr.html).
+Here we will make use of the `dplyr` tools from the `tidyverse` family
+of packages. You can learn more about the useful tools
+[here](https://dplyr.tidyverse.org/articles/dplyr.html).
 
-We will also make use of the `%>%` pipe that we introduced last week. This makes it very easy to combine multiple functions, as it takes the object to the left, and applies the next function to it. 
+We will also make use of the `%>%` pipe that we introduced last week.
+This makes it very easy to combine multiple functions, as it takes the
+object to the left, and applies the next function to it.
 
 Let's put this into action so you can see what happens!
 
@@ -186,63 +180,78 @@ tidy_data <- penguins %>% # creating new object, so that our raw data is safe.
   # using mutate to create new variables. Think of this as "Transform" from SPSS
   mutate( 
     year = as.factor(year), # turn variable into factor
+    across(where(is.character), ~ as.factor(.)) , # converting all character variables to factors. Very useful code to know.
     bill_surface_area_mm2 = bill_length_mm * bill_depth_mm, # creating new variables out of existing variables. Useful for total scores of psychometric scales.
     body_mass_kg = body_mass_g/1000, # Use to convert metrics
     flipper_length_Z = scale(flipper_length_mm),  # create Z scores
-    flipper_length_group = as.factor(case_when(flipper_length_Z > 0 ~ "Big Penguinz",
-                                     flipper_length_Z < 0 ~ "Small Penguinz")) # We can even combine factors. Here we used `as.factor()` around `case_when()` to categorise our data. 
+    flipper_length_group = as.factor(case_when(
+      flipper_length_Z > 0 ~ "Big Penguinz",
+      flipper_length_Z < 0 ~ "Small Penguinz")) # We can even combine functions. Here we used `as.factor()` around `case_when()` to categorise our data. 
     ) %>%
-    filter(sex != "NA", # removing NA from sex
-           flipper_length_Z < 3, # We can also filter on numerical values
-           flipper_length_Z > -3 # This approach is to remove potential extreme values based on Z score. Here we have asked R to remove values IF they are GREATER than 3 sd from the mean, or less than 3 sd from the mean. 
+    filter(
+      sex != "NA", # removing NA from sex variable
            ) %>% 
-  rename("row_id" = `...1`) %>%  # renaming the weird first column of row numbers, the syntax for `rename()` is new_name = old_name
- mutate(across(where(is.character), ~ as.factor(.))) # converting all character variables to factors. Very useful code to know.
-
+  rename("row_id" = `...1`)  # renaming the weird first column of row numbers, the syntax for `rename()` is new_name = old_name
+ 
+  
 summary(tidy_data) # always produce a summary of your data after tidying - check if at all makes sense.
 ```
 
 ### Task time 2
 
-* Repeat the data visualisation steps from Task time 1 on our newly made `tidy_data`.
-* Interpret the visualisations. Are we ready for the next steps?
+-   Repeat the data visualisation steps from Task time 1 on our newly
+    made `tidy_data`.
+-   Interpret the visualisations. Are we ready for the next steps?
 
 ```{r}
-
+hist(tidy_data$body_mass_kg)
+hist(tidy_data$body_mass_g)
+boxplot(tidy_data$bill_surface_area_mm2)
 ```
-
 
 ## Saving our data
 
-Now that the data is processed, we need to save it. This allows us to save time in future steps, and provides us with the freedom to use other software to work with your data if needed (again, we won't judge...). 
+Now that the data is processed, we need to save it. This allows us to
+save time in future steps, and provides us with the freedom to use other
+software to work with your data if needed (again, we won't judge...).
 
-Saving our data is easy, but there are some very important steps to take:
-1) Making sure we have our working directory set. This is where our data will be saved to.
-2) Protect your raw data. Make sure your new file name does not overwrite your raw data.
-3) I always comment out my code after saving. This prevent accidental saving.
+Saving our data is easy, but there are some very important steps to
+take: 1) Making sure we have our working directory set. This is where
+our data will be saved to. 2) Protect your raw data. Make sure your new
+file name does not overwrite your raw data. 3) I always comment out my
+code after saving. This prevent accidental saving.
 
 Time to run our code and save our data.
 
 ```{r}
-# write.csv(
-#           tidy_data, # the object you want to save
-#           "tidy_data.csv" # the file name
-#           )
+#write.csv(
+ #          tidy_data, # the object you want to save
+  #         "data_output/tidy_data.csv" # the file name
+   #        )
 ```
 
 ## 10 min Break Time
 
 ## Analysis Time
 
-Our data is tidied, and has been saved. It's time to address our research questions. For each question, we will work through the analysis, the summary statistics, and the visualisation. 
+Our data is tidied, and has been saved. It's time to address our
+research questions. For each question, we will work through the
+analysis, the summary statistics, and the visualisation.
 
-The aim here is to give you a basic overview of conducting statistical analyses in R. Be aware that it can do sooooo much more. 
+The aim here is to give you a basic overview of conducting statistical
+analyses in R. Be aware that it can do sooooo much more.
 
-The [easystats package and resources](https://easystats.github.io/easystats/) are a great place to look for conducting beginner friendly stats in R.
+The [easystats package and
+resources](https://easystats.github.io/easystats/) are a great place to
+look for conducting beginner friendly stats in R.
 
-### Does penguin weight differ by sex?
+## Does penguin weight differ by sex?
 
-As we have removed the NA's, we only have 2 sex groups. The research question is interested in determining if the continuous `body_mass_g` of penguins differs by these 2 groups. With our previous data vis, we know our data is continous and has no outliers. It is time for the trusty t-test.
+As we have removed the NA's, we only have 2 sex groups. The research
+question is interested in determining if the continuous `body_mass_g` of
+penguins differs by these 2 groups. With our previous data vis, we know
+our data is continuous and has no outliers. It is time for the trusty
+t-test.
 
 ```{r}
 # Reminder plots
@@ -250,20 +259,43 @@ hist(tidy_data$body_mass_kg)
 boxplot(tidy_data$body_mass_kg)
 ```
 
-#### Conducting the t-test
+## Using R for stats: Conducting t-test
 
-Here is the code for conducting a t-test in R. We place the outcome variable on the left of the squiggly tilda `~`, and the group variable on the right.
+R is amazing for statistical analyses. There is a near infinite amount
+of methods that can be used to help you address your research questions.
+These are either built into R by default, or can be found by searching
+for packages which contain the tools you need.
+
+We appreciate that stats can be intimidating, so please don't worry if
+this is all brand new to you. The main aim here is to showcase how we
+might conduct statistical analyses with R. Any interpretation is a
+bonus!
+
+Here is the code for conducting a t-test in R. We place the outcome
+variable on the left of the squiggly tilda `~`, and the group variable
+on the right.
 
 ```{r}
-t.test(body_mass_kg ~ sex,
-       data = tidy_data)
+analysis <- t.test(
+  body_mass_kg ~ sex, # assigning our analysis - outcome ~ predictor
+  data = tidy_data # assigning our dataset
+  )
+
+analysis # view raw results
+
+report(analysis) # view text reported results in APA format.
+
 ```
 
-#### Summary stats
+### Summary stats tables
 
-Here we are using the `group_by()` and `summarise()` functions to create our summary stats for our analysis. This is combined with `gt()` and `fmt_number()` to format our summary stats into a pretty table.
+Here we are using the `group_by()` and `summarise()` functions to create
+our summary stats for our analysis. This is combined with `gt()` and
+`fmt_number()` to format our summary stats into a pretty table.
 
-Making tables is a very useful skill to have, and `gt` is a powerful and versatile tool. More information is [available here](https://gt.rstudio.com/index.html).
+Making tables is a very useful skill to have, and `gt` is a powerful and
+versatile tool. More information is [available
+here](https://gt.rstudio.com/index.html).
 
 ```{r}
 tidy_data %>% 
@@ -274,18 +306,26 @@ tidy_data %>%
   fmt_number(decimals = 2) # formatting numbers to 2 decimal places
 ```
 
-#### Data Visualisation
+### Data Visualisation
 
-We've produced our statistical analysis, and we've produced our summary stats. Now it's time to visualise our analysis to help communicate our findings with greater clarity.
+We've produced our statistical analysis, and we've produced our summary
+stats. Now it's time to visualise our analysis to help communicate our
+findings with greater clarity.
 
-We will talk you through the steps of making lovely plots. We also recommend playing with this amazing [online gui ggplot app](https://shiny.gmw.rug.nl/ggplotgui/), as it gives you a graphic interface to create your plots, and provides you with the code to generate it in R!
+We will talk you through the steps of making lovely plots. We also
+recommend playing with this amazing [online gui ggplot
+app](https://shiny.gmw.rug.nl/ggplotgui/), as it gives you a graphic
+interface to create your plots, and provides you with the code to
+generate it in R!
 
 ```{r}
 ggplot(data = tidy_data, # select data
        aes(x = sex, y= body_mass_kg, fill = sex)) + #select your variables
   geom_boxplot(width = .3, alpha = .7 ) + # Setting a boxplot to visualise data
   theme_minimal() + # I like the minimal theme, as it declutters the plot
-  theme(legend.position = "none") + # removing legend, as the axes already present the sex labels
+  theme(
+        legend.position = "none" # removing legend. Try replacing "none" with "bottom"
+        ) + 
   labs(title = "Does Penguin Bodymass differ by sex?",
        subtitle = "Male Penguins (M = 4.55, sd = .79) are significantly heavier ( t = 8.55, df = 323.9, p <.05).
 than female penguins (M = 3.86, sd = .67)",
@@ -295,157 +335,211 @@ than female penguins (M = 3.86, sd = .67)",
   )
 ```
 
- 
-### Does penguin flipper length differ by species?
+## Plotting with ggplot
 
-The steps are very similar here, but there are some notable differences. This time we are using the `species` variable, and so there are **3** groups. This means we need to initially use the ANOVA to determine if there is a significant difference in flipper length between our species. 
+By now, we have seen some of the plotting we can do with R. Now it's
+time to take you through the process 1 step at a time, so that you can
+have the confidence to play with R and make your own wonderful visual
+masterpieces.
 
-We use the `aov()` function to conduct an ANOVA in R. However, this time we need to assign the results to an object. We then use the `summary()` function on the object to view the results. We will also use the `report()` function from the [`easystats`](https://easystats.github.io/report/) package to provide a quick and standardised APA friendly write up.
+### Step 1 : Assign your data
 
-```{r}
-flipper_analysis <- aov(flipper_length_mm ~ species,
-       data = tidy_data)
-
-summary(flipper_analysis)
-report(flipper_analysis)
-```
-
-As the results are significant, it's time to conduct some post-hoc t-tests to determine where the difference lies. A friendly, robust option in base R is to use `TukeyHSD()`. 
+Here we need to tell R which dataset we want to use. We will load this
+data into the ggplot function.
 
 ```{r}
-TukeyHSD(flipper_analysis)
+
+ggplot(data = tidy_data)
+
 ```
 
-#### Summary stats
+### Step 2: Assigning variables
+
+Now the data is loaded, it's time to assign our variables. These
+variables are all assigned inside the `aes()` of the ggplot command. We
+have so many options to play with in R. Here are some of available
+choices we can use:
+
+-   x
+-   y
+-   color/colour
+-   fill
+-   size
+-   shape
+-   linetype
+
+Remember - just because there is an option to use, doesn't mean we
+should use it... Except for today. Today, play with everything to see
+what happens.
 
 ```{r}
-tidy_data %>% 
-  group_by(species) %>%
-  summarise(`Mean Flipper Length(mm)` = mean(flipper_length_mm),
-            `SD Flipper Length(mm)` = sd(flipper_length_mm)) %>%
-  gt(rowname_col = "sex") %>% # converts object into gt format, which can be rendered as a prettier table 
-  fmt_number(decimals = 2) # formatting numbers to 2 decimal places
+
+ggplot(data = tidy_data,
+       aes(x = flipper_length_mm, y = body_mass_g, color = bill_length_mm)
+       )
+
 ```
 
-#### Data Visualisation
+### Step 3 - Assigning our geometry
 
-This is also a similar step to the last plot. Except this time, we are adding an additional layer to the visualisation - the `geom_violin()` is being used to communicate the distribution of the data in addition to the boxplot.
+It's all well and good setting our variables. But until we give R some
+instructions on how to present it, it can't do anything. We provide
+these instructions using geoms (for geometry - geometry and statistics
+have many overlapping mathematical features, which makes it perfect for
+visualising analyses).
+
+Our geom options include, but are not limited to: \* geom_point() -
+scatter chart \* geom_smooth() - apply predictive model (i.e., line of
+best fit) \* geom_col() - column chart \* geom_bar() - bar chart \*
+geom_boxplot() - boxplot \* geom_hist() - histogram
 
 ```{r}
-ggplot(tidy_data,
-       aes(x = species, y= flipper_length_mm, fill = species)) +
-  geom_violin()+ 
-  geom_boxplot(width = .3, alpha = .7 ) +
-  theme_minimal() +
-  theme(legend.position = "none") +
-  labs(title = "Does Penguin Flipper Length differ by species?",
-       x = "Species",
-       y = "Flipper Length (mm)",
-       caption = "Data from PalmerPenguins")
+# simple plot
+ggplot(data = tidy_data,
+       aes(x = flipper_length_mm, y = body_mass_g, color = bill_length_mm)
+       ) + # we use the + to add layers to our ggplot.
+  geom_point() 
+
+# layered plot
+
+ggplot(data = tidy_data,
+       aes(x = flipper_length_mm, y = body_mass_g, color = bill_length_mm)
+       ) + # we use the + to add layers to our ggplot.
+  geom_point() +
+  geom_smooth(method = "lm") # here we are adding a linear model line to the plot
+
+
 ```
 
+### Step 4 - Faceting the data
 
-### To what extent does penguin flipper length predict penguin weight?
-
-Both our variables this time are continuous. So here we will use linear regression modelling with the `lm()` function. A correlation would also do the trick.
-
-Our first step is to set the models. We will create 2 - one with unstandardised coefficents, and one with standardised coefficents. The standardised version is achieved using the `scale()` function. This is very important for any analyses where you want to compare effect sizes. 
+We can also split up our data by categorical variables in R. This is
+called faceting. This is a very useful technique to use if we want to
+communicate differences between populations or timepoints (or other
+categorical variables). We have 3 options of faceting: \* With the aes
+choices (i.e., color, fill, shape, size). \* With `facet_wrap()` for
+faceting by 1 variable. \* With `facet_grid()` for faceting by 1 or more
+variables.
 
 ```{r}
-m <- lm(body_mass_kg ~ flipper_length_mm, 
-        data = tidy_data)
 
-standardised_m <- lm(scale(body_mass_kg) ~ scale(flipper_length_mm), # wrapping variables in `scale()` to produce standardised coefficents
-                     data = tidy_data)
+# faceting by shape in aes
+ggplot(data = tidy_data,
+       aes(x = flipper_length_mm, y = body_mass_g, 
+           color = bill_length_mm, shape = species)
+       ) + # we use the + to add layers to our ggplot.
+  geom_point() +
+  geom_smooth(method = "lm") # here we are adding a linear model line to the plot
+
+# faceting with facet_wrap()
+
+ggplot(data = tidy_data,
+       aes(x = flipper_length_mm, y = body_mass_g, color = bill_length_mm)
+       ) + # we use the + to add layers to our ggplot.
+  geom_point() +
+  geom_smooth(method = "lm") + # here we are adding a linear model line to the plot
+  facet_wrap(~species)
+
+# faceting with facet_grid()
+
+ggplot(data = tidy_data,
+       aes(x = flipper_length_mm, y = body_mass_g, color = bill_length_mm)
+       ) + # we use the + to add layers to our ggplot.
+  geom_point() +
+  geom_smooth(method = "lm") + # here we are adding a linear model line to the plot
+  facet_grid(~species ~sex)
+
+
 ```
 
-After the models are set, it's time to interpret the results. We will use `summary()` to create our regression table, and `report()` to provide the write up of the data.
+### Step 5 - Changing the styling with theme
 
-```{r}
-summary(m)
-report(m)
+If we want to change the visual display of the plot, we can use the
+`theme()` function, and use/combine this with pre-set themes. Here are
+some we can use:
+
+-   theme_classic() - refined, classic, and does the job for APA formats
+-   theme_bw()
+-   theme_dark()
+-   theme_minimal()
+
+```{r warning = FALSE}
+## notice that warning is set to FALSE in the header. This is to remove the warning message that has been created in the plot, and declutter for this workshop. 
+
+# customising theme
+ggplot(data = tidy_data,
+       aes(x = flipper_length_mm, y = body_mass_g, color = bill_length_mm)
+       ) + # we use the + to add layers to our ggplot.
+  geom_point() +
+  geom_smooth(method = "lm") + # here we are adding a linear model line to the plot
+  facet_wrap(~species) +
+  theme(
+    legend.position = "top" # change legend position inside of theme. 
+    # you can try "top", "bottom", "right", "left", "none"
+      ) 
+
+# preset theme ontop of customised theme
+
+ggplot(data = tidy_data,
+       aes(x = flipper_length_mm, y = body_mass_g, color = bill_length_mm)
+       ) + # we use the + to add layers to our ggplot.
+  geom_point() +
+  geom_smooth(method = "lm") + # here we are adding a linear model line to the plot
+  facet_wrap(~species) +
+  theme(
+    legend.position = "top" # change legend position inside of theme. 
+    # you can try "top", "bottom", "right", "left", "none"
+      ) +
+  theme_classic()
 ```
 
-```{r}
-summary(standardised_m)
-report(standardised_m)
+### Step 6 - Adding labels
+
+Finally, we will make our secondary school science teachers proud - we
+will add labels to our plots. Jokes aside, labels are essential for
+communicating our plots with greater clarity. In R, it also gives us the
+opportunity to tidy up our variable names, so that they go from being
+computer friendly, to being human friendly.
+
+```{r warning = FALSE}
+
+ggplot(data = tidy_data,
+       aes(x = flipper_length_mm, y = body_mass_g, color = bill_length_mm)
+       ) + # we use the + to add layers to our ggplot.
+  geom_point() +
+  geom_smooth(method = "lm") + # here we are adding a linear model line to the plot
+  facet_wrap(~species) +
+  theme(
+    legend.position = "top" # change legend position inside of theme. 
+    # you can try "top", "bottom", "right", "left", "none"
+      ) +
+  theme_classic() + 
+  labs(x = "Flipper Length (mm)",
+       y = "Body Mass (g)",
+       color = "Bill Length (mm)",
+       title = "Plot comparing Physiological measures of Penguin Species")
+
 ```
 
-Question: Why is the intercept significant in the unstandardised model, but not in the standardized version? 
+## Task time
 
-*Geeky/fun fact - in a standardised single variable regression, our effect size will be identical to the correlation coefficient. This is because the calculations rely on the same behind the scenes mathematics, and aren't being affected by the covariates in the analysis.* 
+Time to use ggplot to visually explore the following questions:
 
-```{r}
-  tidy_data %>%
-  select(body_mass_kg , flipper_length_mm) %>%
-  correlation() %>% # correlation comes from `easystats` package
-  summary() %>% 
-  gt() %>% 
-  fmt_number(decimals = 2)
-```
-
-#### Visualisation
-
-Time for the final of this analysis - to communicate it with a plot. This time we make use `geom_point()` to make a scatter plot, and `geom_smooth()` to add our regression model. Note that we have to set the method to "lm" to make sure we get a linear model - otherwise we get the non-linear loess method as the default. 
-
-```{r}
-ggplot(tidy_data,
-       aes(x = flipper_length_mm, y= body_mass_kg)) +
-  geom_point()+ 
-  geom_smooth(method = "lm", se = FALSE) +
-  theme_minimal() +
-  theme(legend.position = "none") +
-  labs(title = "To what extent does penguin flipper length predict penguin weight?",
-       x = "Flipper Length (mm)",
-       y = "Bodymass (kg)",
-       caption = "Data from PalmerPenguins")
-```
-
-
-### Task time 3
-
-To to conduct your own analyses! Use the previous 2 examples to help guide you through the following Research Questions:
-
-#### Task 1 - Does penguin flipper length differ by island?
+### Task 1 - Does penguin flipper length differ by island?
 
 ```{r }
 
 ```
 
-```{r}
-
-```
+### Task 2 - To what extent does bill depth and sex predict bill length?
 
 ```{r}
 
 ```
 
-```{r}
-
-```
-
-
-#### Task 2 - To what extent does bill depth and sex predict bill length?
-
-Here you will need to add the `sex` covariate into the analysis. This can be done by using `+` in-between your predictor variables in the `lm()` function. 
-
-After you've conducted this analysis, play around with `lm()`. Add as many variables as you like! You can also create interaction terms/moderation effects with `*` if you are feeling brave.
+### Task 3 - What is the distributuion of the different penguin species across the different islands?
 
 ```{r}
-
-```
-
-
-```{r}
-
-```
-
-```{r}
-
-```
-
-```{r}
-
 
 ```
 
