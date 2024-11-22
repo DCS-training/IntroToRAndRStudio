@@ -6,6 +6,15 @@ This workshop focused on how to start working with R and R studio and getting fa
 
 Rhys Davies and Lucia Michielin developed and curated the material in this repo.
 
+In this course, we are going to cover:
+
+* How to use and navigate R and R studio
+* Getting started with coding
+* Installing packages, loading libraries and using functions
+* Summarising data with R
+* Wrangling data with R
+* Visualising data with R
+
 ## What you are going to find in this repo
 Within each year's folder, you will find: 
 
