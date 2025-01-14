@@ -43,6 +43,7 @@ different islands.
 We will work through the research questions to guide us through our own
 learning aims for today:
 
+-   Setting projects and managing our data/documents.
 -   Uploading data.
 -   Getting to know the tidyverse.
 -   Making the pipe your best friend.
@@ -51,6 +52,24 @@ learning aims for today:
 -   Summarising data with R.
 -   Creating pretty plots with R.
 
+## Project setting
+
+For this stage, we will be temporarily abandonning our document as the new project is set. But don't worry, we will shortly reopen this document within said project. We will need to follow these steps:
+
+1) Go to the `File` tab, and select `New project...`.
+2) Select `New Directory`, and from there select `New Project`.
+3) This will take us a `Create New Project` pane. Choose the folder you want the project to live in, and name your project.
+4) Our new project is made! At this point, we may want to reopen this document, so we can follow the steps again.
+5) Now we want to pay attention to our Files/Plots/Packages/... Panel (Usually bottom right of the R studio screen). Click the `Files` tab, and click the `+Folder` button to make some new folders.
+6) We want to make the following folders:
+
+    * Raw_data
+    * Prepared_data
+    * Documents
+    * Images
+    * Plots
+    * Other (I love "Other" folders, as they can expect the unexpected...).
+7) And there we go. We are ready!
 
 ## Uploading data
 
@@ -66,11 +85,8 @@ own data. This can seem like a daunting aspect of R, which is a shame as
 it is the very first step of any analysis. But not to worry, we are
 going to guide you through it:
 
-1.  Download the `penguins.csv` file from github.
-2.  For small projects, it is good practice to keep your data in the
-    same folder as your code, so we recommending moving it there. (For
-    larger projects with many data files, you may want to keep code and
-    data in separate subfolders)
+1.  Download the `penguins.csv` file from [github](https://github.com/DCS-training/IntroToRAndRStudio/blob/main/2024/Data/penguins.csv).
+2.  Copy/Move the `penguins.csv` file into our newly created `Raw_data` folder.
 3.  Back in R, click the `Session` tab at the top, then
     `Set Working Directory`, then click `To Source File Location`. This
     step helps R identify where our data and code are kept, and is an
