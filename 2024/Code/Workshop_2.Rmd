@@ -1,5 +1,5 @@
 ---
-title: "Introduction to R and RStudio- Class 2 "
+title: "Introduction to R and RStudio- Workshop 2 "
 author: "Rhys Davies  & Aislinn Keogh"
 date: "`r Sys.Date()`"
 output: html_document
