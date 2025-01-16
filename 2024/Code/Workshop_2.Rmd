@@ -9,16 +9,17 @@ editor_options:
 ---
 
 ```{r}
+install.packages(c("palmerpenguins", "tidyverse", "gt", "easystats"))
 library(palmerpenguins) # Contains the Palmer Penguin dataset.
 library(tidyverse) # Contains multiple very useful packages for data tidying and visualisation. Essential for almost any project.
 library(gt) # Make pretty tables
 library(easystats) # Package that makes statistical analyses much easier
+```
+### OR use the following code. 
 
-# OR use the following code. 
-
-
+```{r}
 ## The pacman::p_load() function will check to see if a package has been installed before running a library() command. This is very useful as it only runs the installation if it is needed. You do need to install pacman first first though with: install.packages('pacman').
-
+install.packages(pacman)
 pacman::p_load(palmerpenguins)
 pacman::p_load(tidyverse)
 pacman::p_load(gt)
@@ -338,7 +339,26 @@ hist(tidy_data$body_mass_kg)
 boxplot(tidy_data$body_mass_kg)
 ```
 
-It is time for the trusty t-test.
+### Summary stats tables
+
+Here we are using the `group_by()` and `summarise()` functions to create
+our summary stats for our analysis. This is combined with `gt()` and
+`fmt_number()` to format our summary stats into a pretty table.
+
+Making tables is a very useful skill to have, and `gt` is a powerful and
+versatile tool. More information is [available
+here](https://gt.rstudio.com/index.html).
+
+```{r}
+tidy_data %>% 
+  group_by(sex) %>%
+  summarise(`Mean body mass(kg)` = mean(body_mass_kg),
+            `SD body mass(kg)` = sd(body_mass_kg)) %>%
+  gt(rowname_col = "sex") %>% # converts object into gt format, which can be rendered as a prettier table 
+  fmt_number(decimals = 2) # formatting numbers to 2 decimal places
+```
+
+Now that we have our summary stats, its time for the trusty t-test to help us decide if the difference between groups is significant.
 
 
 ## Using R for stats: Conducting t-test
@@ -362,24 +382,6 @@ report(analysis) # view text reported results in APA format.
 
 ```
 
-### Summary stats tables
-
-Here we are using the `group_by()` and `summarise()` functions to create
-our summary stats for our analysis. This is combined with `gt()` and
-`fmt_number()` to format our summary stats into a pretty table.
-
-Making tables is a very useful skill to have, and `gt` is a powerful and
-versatile tool. More information is [available
-here](https://gt.rstudio.com/index.html).
-
-```{r}
-tidy_data %>% 
-  group_by(sex) %>%
-  summarise(`Mean body mass(kg)` = mean(body_mass_kg),
-            `SD body mass(kg)` = sd(body_mass_kg)) %>%
-  gt(rowname_col = "sex") %>% # converts object into gt format, which can be rendered as a prettier table 
-  fmt_number(decimals = 2) # formatting numbers to 2 decimal places
-```
 
 ### Data Visualisation
 
@@ -409,6 +411,12 @@ than female penguins (M = 3.86, sd = .67)",
        caption = "Data from PalmerPenguins"
   )
 ```
+
+# Bonus Materials
+
+We appreciate that we are likley to run out of time during this course, as there are so many exciting things to cover. One of them is data visualising (as showcases above). If you want to learn in more depth about using R for data visualisation, please check our [CDCS resources on Good Data Visualisation with R](https://github.com/DCS-training/Good-Data-Visualisation-with-R). 
+
+Below, we have materials below to take you step by step through the layers of creating plots with R. It has so much potential for customising, and allows for near infinite versatility in data visualisation. I love it, and will never go back to excel for my plots. We hope you enjoy! 
 
 ## Plotting with ggplot
 
