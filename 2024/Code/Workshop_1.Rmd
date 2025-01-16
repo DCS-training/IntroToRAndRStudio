@@ -5,21 +5,28 @@ date: "`r Sys.Date()`"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-#install.packages("pacman")
-pacman::p_load(learnr)
-```
 
 ## R Markdown
 
 This is an R Markdown document. Markdown is a formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. Code chunks are where the code is held and ran in an Rmarkdown document. We will explain code chunks in greater detail shortly. But for now, here is your example of a code chunk in R markdown.
 
-```{r cars}
-summary(cars)
+Click the green arrow in corner of the code chunk to run the entire chunk, or alternatively run each line indiviudally with `ctrl` + `enter/command`. 
+
+```{r}
+summary(iris) # provides a summary of the dataset
+plot(iris) # plots the variables of the dataset
+
+# iris is a readymade dataset, built into R. The data is tidy, and is a great tool for exploring coding.
 ```
+
+Congratulations! You have ran code from the code chunk in R markdown. Code chunks are great tools, as they keep our code contained in nice little "boxes", making it easier for us to keep track of our work. They can be identified by the 3 backticks (i.e., `), and {r} at the start of the chunk, followed by 3 backticks at the end. This allows us to make a new code chunk whereever we want in our document. We can also create a new code chunk with the little green +C button on the top right of our source panel. 
+
+Let's make a new code chunk ourselves before moving on!
+
+
+## Why use R markdown?
 
 We love using R markdown for running workshops, as it provides a clear distinction between our notes and our code. This makes our documents easier to follow, and allows us to make additional notes within the document. With more experience, R markdown also allows you to generate publication-ready analysis documents - these can be in Word, pdf or even html formats. It is also possible to use R markdown to generate presentations and web pages.
 
@@ -117,10 +124,10 @@ If we run the following code in the console, the Plots panel will display our pl
 
 Within R, we can the `$` sign to focus the code on a specific variable within our dataset.
 
-```{r echo=FALSE}
-plot(iris)
-boxplot(iris$Sepal.Length)
-hist(iris$Petal.Width)
+```{r}
+plot(iris) # plots all varaibles of dataset
+boxplot(iris$Sepal.Length) # creates a boxplot of a chosen variable from a dataset
+hist(iris$Petal.Width) # create a histogram of a chosen variable from a dataset
 ```
 
 ### Packages
