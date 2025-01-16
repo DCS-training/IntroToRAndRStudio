@@ -8,6 +8,11 @@ editor_options:
     wrap: 72
 ---
 
+## Setup
+
+We will be using the following packages for today's workshop. Run the code chunks below to get your Rstudio setup for the session.
+
+### Traditional setup
 ```{r}
 install.packages(c("palmerpenguins", "tidyverse", "gt", "easystats"))
 library(palmerpenguins) # Contains the Palmer Penguin dataset.
@@ -15,10 +20,12 @@ library(tidyverse) # Contains multiple very useful packages for data tidying and
 library(gt) # Make pretty tables
 library(easystats) # Package that makes statistical analyses much easier
 ```
-### OR use the following code. 
+### Pacman setup
+
+The pacman::p_load() function will check to see if a package has been installed before running a library() command. This is very useful as it only runs the installation if it is needed. You do need to install pacman first first though with: install.packages('pacman').
 
 ```{r}
-## The pacman::p_load() function will check to see if a package has been installed before running a library() command. This is very useful as it only runs the installation if it is needed. You do need to install pacman first first though with: install.packages('pacman').
+
 install.packages(pacman)
 pacman::p_load(palmerpenguins)
 pacman::p_load(tidyverse)
@@ -26,6 +33,8 @@ pacman::p_load(gt)
 pacman::p_load(easystats)
 
 ```
+
+## Intro to R and R Studio: Workshop 2
 
 Welcome back! I hope you are all ready to continue on our R journey.
 Today, we are looking to build on our foundations from last week, and to
