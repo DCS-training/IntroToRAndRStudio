@@ -122,7 +122,7 @@ The default **Output** location is bottom right. It contains Files, Plots, Packa
 
 If we run the following code in the console, the Plots panel will display our plots, and give us the opportunity to export them.
 
-Within R, we can the `$` sign to focus the code on a specific variable within our dataset.
+Within R, we can use the `$` sign to focus the code on a specific variable within our dataset.
 
 ```{r}
 plot(iris) # plots all varaibles of dataset
