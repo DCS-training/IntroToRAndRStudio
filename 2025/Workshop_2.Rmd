@@ -1,6 +1,6 @@
 ---
 title: "Introduction to R and RStudio- Workshop 2 "
-author: "Alex Crest  & Aybuke Atalay"
+author: "Aybuke Atalay & Alex Crest"
 date: "`r Sys.Date()`"
 output: html_document
 editor_options: 
@@ -8,30 +8,29 @@ editor_options:
     wrap: 72
 ---
 
-## Setup
-
-We will be using the following packages for today's workshop. Run the code chunks below to get your Rstudio setup for the session.
-
-### Traditional setup
+## Traditional setup
+We will be using the following packages for today's workshop
 ```{r}
-install.packages(c("palmerpenguins", "tidyverse", "gt", "easystats"))
+install.packages("palmerpenguins")
+install.packages("tidyverse")
+install.packages("gt")
+```
+
+
+### Checking Installed Packages
+Before running the code above, you can check if you already installed those packages!
+
+```{r}
+print(requireNamespace("palmerpenguins", quietly = TRUE))
+print(requireNamespace("tidyverse", quietly = TRUE))
+print(requireNamespace("gt", quietly = TRUE))
+```
+
+### Load Packages
+```{r}
 library(palmerpenguins) # Contains the Palmer Penguin dataset.
 library(tidyverse) # Contains multiple very useful packages for data tidying and visualisation. Essential for almost any project.
 library(gt) # Make pretty tables
-library(easystats) # Package that makes statistical analyses much easier
-```
-### Pacman setup
-
-The pacman::p_load() function will check to see if a package has been installed before running a library() command. This is very useful as it only runs the installation if it is needed. You do need to install pacman first first though with: install.packages('pacman').
-
-```{r}
-
-install.packages(pacman)
-pacman::p_load(palmerpenguins)
-pacman::p_load(tidyverse)
-pacman::p_load(gt)
-pacman::p_load(easystats)
-
 ```
 
 ## Intro to R and R Studio: Workshop 2
@@ -54,16 +53,16 @@ learning aims for today:
 
 -   Setting projects and managing our data/documents.
 -   Uploading data.
--   Getting to know the tidyverse.
--   Making the pipe your best friend.
--   Using R to tidy and filter our data.
--   Saving our tidied data with R.
+-   Getting to know the tidyverse package.
+-   Making the pipe (%>%) your best friend.
+-   Tidy and filter our data using R.
 -   Summarising data with R.
--   Creating pretty plots with R.
+-   Saving data as a .csv file
+
 
 ## Project setting
 
-For this stage, we will be temporarily abandonning our document as the
+For this stage, we will be temporarily abandoning our document as the
 new project is set. But don't worry, we will shortly reopen this
 document within said project. We will need to follow these steps:
 
@@ -79,17 +78,15 @@ document within said project. We will need to follow these steps:
 
 5)  Now we want to pay attention to our Files/Plots/Packages/... Panel
     (Usually bottom right of the R studio screen). Click the `Files`
-    tab, and click the `+Folder` button to make some new folders.
+    tab, and click the `+NewFolder` button to make some new folders.
 
 6)  We want to make the following folders:
 
-    -   Raw_data
-    -   Prepared_data
+    -   raw_data
+    -   prepared_data
     -   Documents
-    -   Images
     -   Plots
-    -   Other (I love "Other" folders, as they can expect the
-        unexpected...).
+    -   Other (for any kind of other file or output you want to store).
 
 7)  And there we go. We are ready!
 
@@ -97,38 +94,31 @@ document within said project. We will need to follow these steps:
 
 We have our research questions. And we have our learning aims. Lets crack on with the important first step of data analysis: uploading our data!
 
-The Penguins dataset is loaded to your workspace when you run the
-library command. This makes the dataset nice and user friendly to get our head around playing with data. 
+The Penguins dataset is loaded to your workspace when you run the "library(palmerpenguins)" command. This makes the dataset nice and user friendly to get our head around playing with data. 
+To load the data into your environment, you have multiple options:
 
-However, when it comes to our own work (tragically non-penguin related), we need to know how to upload our own data. This can seem like a daunting aspect of R, which is a shame as it is the very first step of any analysis. But not to worry, we are going to guide you through it:
+Option 1 (Works with .csv documents, slightly quicker):
+Go to `Files`
+Click on the penguin.csv document at `Files` then click on`Import Dataset`
+Click on `Import`
 
-1.  Download the `penguins.csv` file from
-    [github](https://github.com/DCS-training/IntroToRAndRStudio/blob/main/2024/Data/penguins.csv).
-2.  Copy/Move the `penguins.csv` file into our newly created `Raw_data`
-    folder.
-3.  Find the `Environment` panel, and click on the `Import Dataset` tab.
-4.  From there, click `From Text (readr)...`. (We can also upload excel,
-    SPSS, SAS and STATA data files from here as well).
-5.  Go to `Browse`, go to the `Raw_data` folder, find your
-    `penguins.csv` file, and select it.
-6.  Bonus tip - copy the code from the `Code Preview` box, and paste
-    into the code chunk below. This way, you wont need to repeat the
-    last 3 steps when you want to re-run your analysis.
-7.  Click `Import`.
+Option 2 (Works with multiple types of documents):
+Find the `Environment` panel, and click on the `Import Dataset` tab.
+From there, click `From Text (readr)...`. (We can also upload excel,SPSS, SAS and STATA data files from here as well).
 
+Option 3:
 ```{r data_upload, echo = FALSE}
 library(readr)
-
-
-penguins <- read_csv() # We will copy the path directory from the Import Dataset tab, and paste it here.
+penguins <- read_csv("penguins.csv")  # We will copy the path directory from the Import Dataset tab, and paste it here.
 ```
-
+Option 4
 ```{r}
 penguins <- read_csv(url("https://raw.github.com/DCS-training/IntroToRAndRStudio/main/2024/Data/penguins.csv")) # This is our back-up option. It will take the dataset directly from github, allowing you to follow the materials if there is an issue with importing the data
 
 ```
 
 Congratulations! You have uploaded your dataset into R. Now it's time to prepare our data for analysis.
+
 
 ## Data Tidying in R
 
@@ -156,20 +146,38 @@ Things to look out for:
 
 Let's inspect our dataset!
 
+
 #### numeric data inspecting
 
 ```{r}
-view(penguins) # Lets us view the entire dataset. Not advised for large data.
+View(penguins) # Lets us view the entire dataset. Not advised for large data.
 head(penguins) # Lets us view the first 6 rows
 tail(penguins, n = 8) # Lets us view the last 6 rows
 summary(penguins) # Provides an overview of all our variables
-glimpse(penguins) # Get an oveview of the data structure along with a preview of the first few rows in each variable.
+glimpse(penguins) # Get an overview of the data structure along with a preview of the first few rows in each variable.
 
 ```
-#### visual data inspecting
+
+
+
+### Inspect Rows and Columns at the Data
+```{r}
+nrow(penguins) # prints the number of rows 
+ncol(penguins) # prints the number of columns 
+names(penguins) # prints the column names
+```
+
+### Inspect Variable Types
+```{r}
+class(penguins$species)
+class(penguins$body_mass_g)
+class(penguins$year)
+```
+
+
+#### Visual Data Inspection
 
 ```{r}
-plot(penguins)
 hist(penguins$flipper_length_mm) # using $ allows us to choose our variable. Try Changing flipper_length_mm to bill_length_mm, or any other variable from the dataset!
 boxplot(penguins$flipper_length_mm)
 ```
@@ -188,7 +196,9 @@ hist(penguins$body_mass_g)
 boxplot(penguins$body_mass_g)
 ```
 
-## Treating our data
+
+
+## Preprocessing our data
 
 We have now identified our missing data, and inspected our variables for outliers and their distributions. It's time to process our data to get it ready for analysis!
 
@@ -199,36 +209,58 @@ We will also make use of the `%>%` pipe that we introduced last week. This makes
 
 Let's put this into action so you can see what happens!
 
-### mutate()
+### Identifying and Cleaning Missing Variables :  is.na() and drop_na()
+
+```{r}
+sum(is.na(penguins)) # Total number of Nas in the document
+sum(!complete.cases(penguins)) # total number of rows that contain at least one NA
+penguins_clean<- penguins %>% drop_na()
+
+```
+
+
+### Creating new variables: mutate()
 
 Mutate is used to change our variables. Think of it as "Transform variables" from SPSS, but more versatile! We can use a variety of functions within mutate, and even create our own when we get advanced. We can also combine functions, and use newly created variables in new commands. It's such a powerful tool. 
 
 It's also very useful for any researchers working with psychometric measures - as it allows us to create total scores whilst keeping track of our steps within the code.
 
 ```{r}
-mutate_example <- penguins %>%
+mutate_example <- penguins_clean %>%
   mutate(
     body_mass_kg = body_mass_g/1000, # here we use mutate to convert the units from grams to kilograms 
     species = as.factor(species), # We can use R to convert our data from character to factor format
     bill.length.mm = bill_length_mm, # we can also use mutate to create a new variable with a different variable name
-    flipper_length_Z = scale(flipper_length_mm),  # standardise our data
-    flipper_length_group = as.factor(case_when(
-      flipper_length_Z > 0 ~ "Big Penguinz",
-      flipper_length_Z < 0 ~ "Small Penguinz")
-      ) # We can even combine functions. Here we used `as.factor()` around `case_when()` to categorise our data based on a the variable made in the previous step. 
+    flipper_length_Z = scale(flipper_length_mm)  # standardise our data
   )
 ```
 
-### rename()
+### Creating a new variable with condition using mutate(): `if_else` and `case_when` functions 
+
+```{r}
+mutate_example_2 <- penguins_clean %>%
+  mutate(year_2009 = if_else(year==2009, "Yes", "No"))
+  # if year=2009, the new column (year_2009) records as "Yes"; if the year != 2009, the new column (year_2009) records as "No"
+  
+
+mutate_example_3 <- penguins_clean %>%
+                      mutate(flipper_length_group = case_when(flipper_length_mm > 200 ~ "Big Penguinz",
+                                           flipper_length_mm >= 180 & flipper_length_mm <= 200~ "Mid Size Penguinz",
+                                           flipper_length_mm < 180 ~ "Small Penguinz"))
+```
+
+
+
+### Renaming a Column Name: rename()
 
 We can also rename our variables using the `rename()` function. This is useful if we want to replace our existing variable names (whilst using mutate() will keep a copy of the old name within the data) 
 
 ```{r}
-renamed_varaibles <- penguins %>% 
+renamed_varaibles <- penguins_clean %>% 
   rename("bill.length.mm" = bill_length_mm)
 ```
 
-### filter()
+### Filtering rows: filter()
 
 There are times where we need to filter our data. We may want to focus on certain populations. Or we might want remove outliers/suspicious values. All this can be done with `filter()`. 
 
@@ -244,63 +276,85 @@ We can also combine filter rules in R. We can specify *AND* with either `&` or `
 ```{r}
 ## Filter examples
 
-Adelie_Penguins <- penguins %>%
+Adelie_Penguins <- penguins_clean %>%
   filter(
     species == "Adelie"
     )
 
-Big_Gentoo_Penguins <- penguins %>%
+Big_Gentoo_Penguins <- penguins_clean %>%
   filter(
    species == "Gentoo",
    body_mass_g > 5000
   )
 
-Biscoe_OR_Dream_island <- penguins %>% 
+Biscoe_OR_Dream_island <- penguins_clean %>% 
   filter(
     island == "Biscoe" | island == "Dream"
   )
+
+
 ```
+
+### Selecting Columns: select()
+```{r}
+penguin_islands<- penguins_clean %>%
+                  select(species,island)
+head(penguin_islands)
+
+```
+
 
 ## 10 min Break Time
 
 Grab yourself a coffee, and have a chill. Feel free to ask us any questions during this time!
 
-### Putting it all together
+
+### Putting it all together using %>%
 
 Whilst we can work iteratively to change our data step by step, we can also combine multiple functions with the pipe `%>%`. 
 
 ```{r}
-tidy_data <- penguins %>% 
+tidy_data <- penguins_clean %>% 
   mutate(  
     year = as.factor(year), 
     species = as.factor(species),
     island = as.factor(island),
     body_mass_kg = body_mass_g/1000
     ) %>%
-    filter( 
-  
-           ) %>% 
+  filter(species == "Adelie") %>% 
   rename("row_id" = `...1`)  # renaming the weird first column of row numbers, the syntax for `rename()` is new_name = old_name
  
   
 summary(tidy_data) # always produce a summary of your data after tidying - check if at all makes sense.
 ```
 
+### Example with arrange() and slice()
+```{r}
+top_10_biggest <- penguins_clean %>%
+                arrange(desc(body_mass_g)) %>%
+                slice(0:10)
 
-### Task time 2
+top_10_smallest <- penguins_clean %>%
+                arrange((body_mass_g)) %>%
+                slice(0:10)
 
--   Update the code above, to create a new variable called `bill_surface_area_mm2`. This variable will the be computed by multiplying bill_length_mm with bill_depth_mm. (Hint - in R, we use * to multiply variables).
--   Filter the data to remove the "NA" values from the `sex` variable.
--   Use the code from the chunk below to visualise our new `bill_surface_area_mm2` variable from `tidy_data`.
--   Interpret the visualisations. What do we think?
--   Use `summary()` to inspect `tidy_data`.
+```
+
+### Grouping and Summarising Data: group_by() and summarise()
 
 ```{r}
-plot()
-hist()
-boxplot()
-summary()
+penguins_summary<- penguins_clean %>% 
+                    group_by(species) %>%
+                    summarise(n=n(), # number of observations in each species
+                              mean_weight = mean(body_mass_g)) # average weight of species
+
+
+# Creating a table 
+penguins_summary %>% 
+  gt()
+  
 ```
+
 
 ## Saving our data
 
@@ -319,90 +373,38 @@ our data will be saved to.
 Time to run our code and save our data.
 
 ```{r}
-#write.csv(
- #          tidy_data, # the object you want to save
-  #         "Prepared_data/tidy_data.csv" # the file name
-   #        )
+write.csv(tidy_data, file= "prepared_data/tidy_data.csv") # the object you want to save and the path of the file you want to save into
 ```
 
 
-## Analysis Time
+### Task 2
 
-Our data is tidied, and has been saved. It's time to address our research questions. For each question, we will work through the analysis, the summary statistics, and the visualisation.
+Using penguins_clean
 
-We are going to work through a t-test on the analysis, to examine if the difference between 2 groups is significant or not. If the t-test is new to you, do not worry, as the technical details of the analysis are not the focus here. The focus is to give you an example of how the analysis can be conducted using code.
-
-
-The aim here is to give you an overview of conducting statistical analyses in R. Be aware that it can do sooooo much more. R is a purpose built for statistical analyses, and to me makes the running of analyses much easier. If there is an analysis you are curious about using, chances are you can conduct with a ready made package in R.
-
-The [easystats package and resources](https://easystats.github.io/easystats/) are a great place to look for conducting beginner friendly stats in R. They make the analysis easier, and their documentation is lovely.
-
-## Does penguin weight differ by sex?
-
-As we have removed the NA's, we only have 2 sex groups. The research
-question is interested in determining if the continuous `body_mass_g` of penguins differs by these 2 groups. With our previous data vis, we know our data is continuous and has no outliers.
-
-```{r}
-# Plots of body mass distribution
-hist(tidy_data$body_mass_kg)
-boxplot(tidy_data$body_mass_kg)
-```
-
-### Summary stats tables
-
-Here we are using the `group_by()` and `summarise()` functions to create
-our summary stats for our analysis. This is combined with `gt()` and
-`fmt_number()` to format our summary stats into a pretty table.
-
-Making tables is a very useful skill to have, and `gt` is a powerful and
-versatile tool. More information is [available
-here](https://gt.rstudio.com/index.html).
-
-```{r}
-tidy_data %>% 
-  group_by(sex) %>%
-  summarise(`Mean body mass(kg)` = mean(body_mass_kg),
-            `SD body mass(kg)` = sd(body_mass_kg)) %>%
-  gt(rowname_col = "sex") %>% # converts object into gt format, which can be rendered as a prettier table 
-  fmt_number(decimals = 2) # formatting numbers to 2 decimal places
-```
-
-Now that we have our summary stats, its time for the trusty t-test to help us decide if the difference between groups is significant.
+- Create a new variable called `bill_surface_area_mm2` by multiplying `bill_length_mm` with `bill_depth_mm`. (Hint - in R, we use * to multiply variables).
+- Filter `species` and only keep "Adelie" and "Gentoo"
+- Compare the average `bill_surface_area_mm2`. Tip: use group_by() and summarise() functions from dplyr
+- Visualise the distribution of `bill_surface_area_mm2` using hist()
+- Interpret the visualisations. What do we think?
+- Save the new data you created to prepared_data folder!
 
 
-## Using R for stats: Conducting t-test
 
-R is amazing for statistical analyses. There is a near infinite amount of methods that can be used to help you address your research questions. These are either built into R by default, or can be found by searching for packages which contain the tools you need.
-
-We appreciate that stats can be intimidating, so please don't worry if this is all brand new to you. The main aim here is to showcase how we might conduct statistical analyses with R. Any interpretation is a bonus!
-
-Here is the code for conducting a t-test in R. We place the outcome
-variable on the left of the squiggly tilda `~`, and the group variable on the right.
-
-```{r}
-analysis <- t.test(
-  body_mass_kg ~ sex, # assigning our analysis - outcome ~ predictor
-  data = tidy_data # assigning our dataset
-  )
-
-analysis # view raw results
-
-report(analysis) # view text reported results in APA format.
-
-```
-
+### Bonus Materials
 
 ### Data Visualisation
 
-We've produced our statistical analysis, and we've produced our summary
-stats. Now it's time to visualise our analysis to help communicate our
-findings with greater clarity.
+We appreciate that we are likley to run out of time during this course, as there are so many exciting things to cover. One of them is data visualising (as showcases above). If you want to learn in more depth about using R for data visualisation, please check our [CDCS resources on Good Data Visualisation with R](https://github.com/DCS-training/Good-Data-Visualisation-with-R). 
 
-We will talk you through the steps of making lovely plots. We also
-recommend playing with this amazing [online gui ggplot
+After preprocessing data,you can try to visualise our analysis to help communicate your data and some summary statistics
+with greater clarity using `ggplot` 
+
+We also recommend playing with this amazing [online gui ggplot
 app](https://shiny.gmw.rug.nl/ggplotgui/), as it gives you a graphic
 interface to create your plots, and provides you with the code to
 generate it in R!
+
+Below is an example of a ggplot output. 
 
 ```{r}
 ggplot(data = tidy_data, # select data
@@ -421,9 +423,6 @@ than female penguins (M = 3.86, sd = .67)",
   )
 ```
 
-# Bonus Materials
-
-We appreciate that we are likley to run out of time during this course, as there are so many exciting things to cover. One of them is data visualising (as showcases above). If you want to learn in more depth about using R for data visualisation, please check our [CDCS resources on Good Data Visualisation with R](https://github.com/DCS-training/Good-Data-Visualisation-with-R). 
 
 Below, we have materials below to take you step by step through the layers of creating plots with R. It has so much potential for customising, and allows for near infinite versatility in data visualisation. I love it, and will never go back to excel for my plots. We hope you enjoy! 
 
@@ -539,7 +538,7 @@ ggplot(data = tidy_data,
 
 ```
 
-### Step 5 - Changing the styling with theme
+### Step 5 - Changing the styling with them
 
 If we want to change the visual display of the plot, we can use the `theme()` function, and use/combine this with pre-set themes. Here are some we can use:
 
@@ -602,7 +601,7 @@ ggplot(data = tidy_data,
 
 ```
 
-## Task time
+## Self Tasks
 
 Time to use ggplot to visually explore the following questions:
 
