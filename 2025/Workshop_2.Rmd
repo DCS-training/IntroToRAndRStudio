@@ -89,6 +89,8 @@ print(requireNamespace("gt", quietly = TRUE))
 library(palmerpenguins) # Contains the Palmer Penguin dataset.
 library(tidyverse) # Contains multiple very useful packages for data tidying and visualisation. Essential for almost any project.
 library(gt) # Make pretty tables
+library(dplyr) #installed with tidyverse
+library(tidyr) #installed with tidyverse
 ```
 
 
@@ -626,4 +628,5 @@ Time to use ggplot to visually explore the following questions:
 ```
 
 ## End of Session
+
 
