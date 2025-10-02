@@ -8,31 +8,6 @@ editor_options:
     wrap: 72
 ---
 
-## Traditional setup
-We will be using the following packages for today's workshop
-```{r}
-install.packages("palmerpenguins")
-install.packages("tidyverse")
-install.packages("gt")
-```
-
-
-### Checking Installed Packages
-Before running the code above, you can check if you already installed those packages!
-
-```{r}
-print(requireNamespace("palmerpenguins", quietly = TRUE))
-print(requireNamespace("tidyverse", quietly = TRUE))
-print(requireNamespace("gt", quietly = TRUE))
-```
-
-### Load Packages
-```{r}
-library(palmerpenguins) # Contains the Palmer Penguin dataset.
-library(tidyverse) # Contains multiple very useful packages for data tidying and visualisation. Essential for almost any project.
-library(gt) # Make pretty tables
-```
-
 ## Intro to R and R Studio: Workshop 2
 
 Welcome back! I hope you are all ready to continue on our R journey.
@@ -89,6 +64,33 @@ document within said project. We will need to follow these steps:
     -   Other (for any kind of other file or output you want to store).
 
 7)  And there we go. We are ready!
+
+
+## Traditional setup
+We will be using the following packages for today's workshop
+```{r}
+install.packages("palmerpenguins")
+install.packages("tidyverse")
+install.packages("gt")
+```
+
+
+### Checking Installed Packages
+Before running the code above, you can check if you already installed those packages!
+
+```{r}
+print(requireNamespace("palmerpenguins", quietly = TRUE))
+print(requireNamespace("tidyverse", quietly = TRUE))
+print(requireNamespace("gt", quietly = TRUE))
+```
+
+### Load Packages
+```{r}
+library(palmerpenguins) # Contains the Palmer Penguin dataset.
+library(tidyverse) # Contains multiple very useful packages for data tidying and visualisation. Essential for almost any project.
+library(gt) # Make pretty tables
+```
+
 
 ## Uploading data
 
@@ -624,3 +626,4 @@ Time to use ggplot to visually explore the following questions:
 ```
 
 ## End of Session
+
