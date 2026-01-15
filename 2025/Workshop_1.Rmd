@@ -40,7 +40,7 @@ The other useful feature is the `Outline` tab. This uses the header structure to
 
 ## On to R Studio
 
-To those of you who haven't visited here before, let's have a look around to get acclimatised to the wonderful world of R studio. There are 4 main components to R studio: the source panel, the Environment panel, the Console Panel, and the Output panel.
+To those of you who haven't visited here before. There are 4 main components to the R studio UI: the source panel, the Environment panel, the Console Panel, and the Output panel.
 
 For a more detailed overview, you can visit the [R Studio User Guide](https://docs.posit.co/ide/user/ide/guide/ui/ui-panes.html), but for today we will give a quick run through of the basics to get you started.
 
