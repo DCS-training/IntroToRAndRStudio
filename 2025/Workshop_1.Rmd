@@ -126,10 +126,14 @@ mean(b *c)
 
 The default **Output** location is bottom right. It contains Files, Plots, Packages, Help, and Viewer tabs. For today we will cover Plots, Packages, and Help tabs, as they are most immediately relevant.
 
-### Plots
+### Exploring the Dataset
+```{r}
+#Loading the data
+data<-iris
 
-If we run the following code in the console, the Plots panel will display our plots, and give us the opportunity to export them.
-
+#Exploring variables
+iris$Species
+```
 Within R, we can use the `$` sign to focus the code on a specific variable within our dataset.
 
 ```{r}
