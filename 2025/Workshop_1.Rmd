@@ -148,6 +148,8 @@ iris$Species
 ```
 Within R, we can use the `$` sign to focus the code on a specific variable within our dataset.
 
+# Visualising the data
+
 ```{r}
 plot(iris) # plots all varaibles of dataset
 boxplot(iris$Sepal.Length) # creates a boxplot of a chosen variable from a dataset
@@ -162,6 +164,45 @@ We can also summarise the dataset
 ```{r}
 summary(iris)
 ```
+# Building your own dataset
+
+```{r}
+# Create vectors
+character <- c("Frodo Baggins", "Samwise Gamgee", "Gandalf",
+               "Aragorn", "Legolas", "Gimli",
+               "Boromir", "Arwen", "Galadriel", "Elrond")
+ 
+height_cm <- c(106, 107, 180, 198, 193, 140, 185, 175, 180, 190)
+ 
+origin <- c("The Shire", "The Shire", "Valinor",
+            "Gondor", "Mirkwood", "Lonely Mountain",
+            "Gondor", "Rivendell", "Lothlórien", "Rivendell")
+ 
+ranking <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+ 
+# Create the data frame
+
+lotr_df <- data.frame(
+  Character = character,
+  Height_cm = height_cm,
+  Origin = origin,
+  Ranking = ranking,
+  stringsAsFactors = FALSE
+)
+ 
+# View the data frame
+lotr_df
+```
+
+#### Tasks
+
+1) Create a dataset of your own with 4 vectors, 5 values each.
+
+2) Explore your dataset using functions such as summary(), head(), tail()
+
+3) Print out Row 3, Column 2
+
+
 
 ### Packages
 
