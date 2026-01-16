@@ -65,12 +65,7 @@ The data can be numerical, categorical or character based.
 Those of you with keen eyes will have noticed the use of `#` in the ggplot and the descriptive statistics code. In R, we use hashtags to comment our code. Comments will not affect our functions/code. Instead we use hashtags to explain our code. This can be used to help communicate our code to others, or to remind ourselves of what our code does. Be aware that any code after a hashtag within a line will not run - commented code can be identified by its green colour.
 
 ```{r}
-a <- 3
-b <- c(0,1,2,3)
-c <- seq(from = 0, to = 24, by = 8)
-d <- rbind(b, c) 
-Wow <- "This course is amazing!!"
-`Is it?` <- TRUE # the backticks here allow you to include punctuation and spaces in your object names
+# This is a comment
 ```
 
 #### Other environment uses
@@ -94,6 +89,14 @@ The **Tutorial** is part of the `learnr` package that we installed right at the 
 The **console panel** default location is bottom left. The console panel has 3 tabs - Console, Terminal, and Background Jobs. For today, we are only interested in the Console tab, as the other tabs are only used for more advanced projects (and the Terminal tab scares me somewhat, as it executes system commands).
 
 The Console tab allows for interactive execution of code, and to test ideas. I often use the console tab to quickly see my code outputs. At the end of the session, the console is cleared. So make sure that any useful code that needs to be reproducible is saved to your code documents in the Source panel.
+
+
+a <- 3
+b <- c(0,1,2,3)
+c <- seq(from = 0, to = 24, by = 8)
+d <- rbind(b, c) 
+Wow <- "This course is amazing!!"
+`Is it?` <- TRUE # the backticks here allow you to include punctuation and spaces in your object names
 
 #### Tasks
 
