@@ -111,7 +111,6 @@ a
 d
 a * d 
 mean(b *c)
-sd(c)
 ```
 
 ## Output Panel
