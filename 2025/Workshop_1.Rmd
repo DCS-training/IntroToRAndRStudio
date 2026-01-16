@@ -142,9 +142,13 @@ boxplot(iris$Sepal.Length) # creates a boxplot of a chosen variable from a datas
 hist(iris$Petal.Width) # create a histogram of a chosen variable from a dataset
 ```
 We can explore a specific column
+
+```{r}
 table(iris$Species)
+```
 
 We can also summarise the dataset
+
 ```{r}
 summary(iris)
 ```
