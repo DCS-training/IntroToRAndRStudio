@@ -5,7 +5,6 @@ date: "`r Sys.Date()`"
 output: html_document
 ---
 
-
 ## R Markdown
 
 This is an R Markdown document. Markdown is a formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
@@ -126,10 +125,23 @@ mean(b *c)
 
 The default **Output** location is bottom right. It contains Files, Plots, Packages, Help, and Viewer tabs. For today we will cover Plots, Packages, and Help tabs, as they are most immediately relevant.
 
-### Exploring the Dataset
+## 10min Break Time/Q+A.
+
+## Exploring the Dataset
+
 ```{r}
 #Loading the data
-data<-iris
+iris<-iris
+
+# First 5 rows
+head(iris,5)
+
+# Last 5 rows
+tail(iris)
+
+# Choosing a specific row and column
+# Row 5, Column 2
+iris[5,2]
 
 #Exploring variables
 iris$Species
@@ -142,16 +154,15 @@ boxplot(iris$Sepal.Length) # creates a boxplot of a chosen variable from a datas
 hist(iris$Petal.Width) # create a histogram of a chosen variable from a dataset
 ```
 We can explore a specific column
-
 ```{r}
 table(iris$Species)
 ```
 
 We can also summarise the dataset
-
 ```{r}
 summary(iris)
 ```
+
 ### Packages
 
 The Packages tab allows to view which packages are currently installed, and to search, update and Install new packages to our session.
@@ -160,47 +171,5 @@ The Packages tab allows to view which packages are currently installed, and to s
 
 A very useful tab. The Help tab has a search tool, that allows us to look up functions, useful vignettes and package documentation. We can also code `?` or `help()` on a function name to get help.
 
-## 10min Break Time/Q+A.
-
-## Task Time
-
--   Using the **Packages** tab, install `tidyverse`. You can also do this in a code chunk by typing `install.packages("tidyverse")`.
--   Run the `library(tidyverse)` command to load the `tidyverse` functions
--   Create your own code chunk! 
--   Use Help to look up `summary`, `ggplot`, and `summarise`.
--   Run the `summary(iris)` command. Then test what happens if you select a variable using the `$` sign.
--   Run the ggplot code.
--   Replace `x` from `Petal.Width` to `Species`, and re-run the code.
--   Replace `geom_point()` with `geom_boxplot`, and re-run the code.
--   Right click your pretty plot, and copy it. Paste it into a word doc, and show the world your masterpiece.
--   Run the descriptive statistics code.
--   Adapt the code within the `summarise()` function, to create a `mean_Petal.Width` statistic.
--   See if you can adapt the code to create a standard deviation statistic, using the `sd()` function.
-
-```{r library}
-library(tidyverse)
-```
-
-```{r summary}
-summary(iris)
-```
-
-```{r ggplot}
-ggplot(data = iris, # Telling ggplot the dataset to use
-       aes(x = Petal.Width, y = Petal.Length , color =Species )) + # Setting the variables
-  geom_point() # Setting the visual representation of the variables
-```
-
-```{r descriptive_statistics}
-iris %>% # Using %>% to combine multiple functions
-  group_by(Species) %>% # Pre grouping our variables by Species
-  summarise(mean_Petal.Length = mean(Petal.Length)) # Using summarise to provide descriptive statistics by the group level.
-
-```
-
-
-### The Pipe `%>%`
-
-You will have also noticed `%>%` - the pipe. This is an incredibly useful tool that allows us combine multiple functions in a readable and clear manner. It takes the object to its left, and applies the next function to it. A sort of "Take this, and do that" command. We will make more use of the pipe next week, but we wanted to introduce it to you today.
 
 ## Q+A and wrapping up
