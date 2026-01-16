@@ -137,7 +137,7 @@ iris<-iris
 head(iris,5)
 
 # Last 5 rows
-tail(iris)
+tail(iris,5)
 
 # Choosing a specific row and column
 # Row 5, Column 2
