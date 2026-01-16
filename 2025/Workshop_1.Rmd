@@ -60,6 +60,10 @@ Objects are anything that we assign data, functions, or lists to. These objects 
 
 The data can be numerical, categorical or character based.
 
+### Hashtags
+
+Those of you with keen eyes will have noticed the use of `#` in the ggplot and the descriptive statistics code. In R, we use hashtags to comment our code. Comments will not affect our functions/code. Instead we use hashtags to explain our code. This can be used to help communicate our code to others, or to remind ourselves of what our code does. Be aware that any code after a hashtag within a line will not run - commented code can be identified by its green colour.
+
 ```{r}
 a <- 3
 b <- c(0,1,2,3)
@@ -175,9 +179,6 @@ iris %>% # Using %>% to combine multiple functions
 
 ```
 
-### Hashtags
-
-Those of you with keen eyes will have noticed the use of `#` in the ggplot and the descriptive statistics code. In R, we use hashtags to comment our code. Comments will not affect our functions/code. Instead we use hashtags to explain our code. This can be used to help communicate our code to others, or to remind ourselves of what our code does. Be aware that any code after a hashtag within a line will not run - commented code can be identified by its green colour.
 
 ### The Pipe `%>%`
 
