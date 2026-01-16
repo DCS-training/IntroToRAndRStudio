@@ -141,7 +141,13 @@ plot(iris) # plots all varaibles of dataset
 boxplot(iris$Sepal.Length) # creates a boxplot of a chosen variable from a dataset
 hist(iris$Petal.Width) # create a histogram of a chosen variable from a dataset
 ```
+We can explore a specific column
+table(iris$Species)
 
+We can also summarise the dataset
+```{r}
+summary(iris)
+```
 ### Packages
 
 The Packages tab allows to view which packages are currently installed, and to search, update and Install new packages to our session.
