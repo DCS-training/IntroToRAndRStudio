@@ -198,7 +198,7 @@ lotr_df
 city <- c("Pompeii", "Milan", "Naples", "Paris", "London",
           "Istanbul", "Alexandria", "Leptis Magna")
 
-distance_miles <- c(150, 300, 140, 690, 890, 850, 1400, 1100)
+distance_miles <- c(130, 300, 115, 730, 890, 850, 1400, 1100)
  
 country <- c("Italy", "Italy", "Italy", "France", "United Kingdom",
              "Turkey", "Egypt", "Libya")
