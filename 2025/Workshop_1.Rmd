@@ -194,6 +194,30 @@ lotr_df <- data.frame(
 lotr_df
 ```
 
+# 1. Create vectors
+city <- c("Pompeii", "Milan", "Naples", "Paris", "London",
+          "Istanbul", "Alexandria", "Leptis Magna")
+
+distance_miles <- c(150, 300, 140, 690, 890, 850, 1400, 1100)
+ 
+country <- c("Italy", "Italy", "Italy", "France", "United Kingdom",
+             "Turkey", "Egypt", "Libya")
+ 
+founded <- c("700 BCE", "600 BCE", "600 BCE", "52 BCE", "43 CE", "657 BCE", "331 BCE", "7 BCE")
+ 
+# 2. Create the data frame
+roman_cities_df <- data.frame(
+  City = city,
+  Distance_from_Rome_miles = distance_miles,
+  Country = country,
+  Founded = founded,
+  stringsAsFactors = FALSE
+)
+ 
+# 3. View the data frame
+roman_cities_df
+```
+
 #### Tasks
 
 1) Create a dataset of your own with 4 vectors, 5 values each.
