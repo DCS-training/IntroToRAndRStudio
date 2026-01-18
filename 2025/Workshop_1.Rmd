@@ -167,6 +167,7 @@ summary(iris)
 # Building your own dataset
 
 ```{r}
+#Example 1
 # Create vectors
 character <- c("Frodo Baggins", "Samwise Gamgee", "Gandalf",
                "Aragorn", "Legolas", "Gimli",
@@ -192,9 +193,8 @@ lotr_df <- data.frame(
  
 # View the data frame
 lotr_df
-```
 
-# 1. Create vectors
+# Example 2. Create vectors
 city <- c("Pompeii", "Milan", "Naples", "Paris", "London",
           "Istanbul", "Alexandria", "Leptis Magna")
 
