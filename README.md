@@ -4,7 +4,7 @@ Hello Everyone! This is the Readme File for the Intro to R and R Studio Course.
 
 This workshop focused on how to start working with R and R studio and getting familiar with its interface and commands.
 
-Rhys Davies and Lucia Michielin developed and curated the material in this repo.
+Rhys Davies, Lucia Michielin, Alex Crest and Aybuke Atalay developed and curated the material in this repo.
 
 In this course, we are going to cover:
 
