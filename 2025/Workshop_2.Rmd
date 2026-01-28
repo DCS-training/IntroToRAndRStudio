@@ -156,7 +156,7 @@ Let's inspect our dataset!
 ```{r}
 View(penguins) # Lets us view the entire dataset. Not advised for large data.
 head(penguins) # Lets us view the first 6 rows
-tail(penguins, n = 8) # Lets us view the last 6 rows
+tail(penguins, n = 8) # Lets us view the last 8 rows
 summary(penguins) # Provides an overview of all our variables
 glimpse(penguins) # Get an overview of the data structure along with a preview of the first few rows in each variable.
 
@@ -192,14 +192,6 @@ boxplot(penguins$flipper_length_mm)
 -   Identify if all variables are correctly structured.
 -   Use `hist()` and `boxplot()` to check the distribution of
     `body_mass_g`.
-
-```{r}
-summary(penguins)
-glimpse(penguins)
-hist(penguins$body_mass_g)
-boxplot(penguins$body_mass_g)
-```
-
 
 
 ## Preprocessing our data
@@ -628,5 +620,6 @@ Time to use ggplot to visually explore the following questions:
 ```
 
 ## End of Session
+
 
 
