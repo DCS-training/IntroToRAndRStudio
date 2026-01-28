@@ -178,6 +178,15 @@ class(penguins$body_mass_g)
 class(penguins$year)
 ```
 
+# Inspect Categorical Variables
+```{r}
+class(penguins$species)
+class(penguins$sex)
+```
+```{r}
+table(penguins$species)
+table(penguins$sex)
+```
 
 #### Visual Data Inspection
 
@@ -192,6 +201,7 @@ boxplot(penguins$flipper_length_mm)
 -   Identify if all variables are correctly structured.
 -   Use `hist()` and `boxplot()` to check the distribution of
     `body_mass_g`.
+-   Identify the number of penguins in each Island.
 
 
 ## Preprocessing our data
@@ -209,8 +219,10 @@ Let's put this into action so you can see what happens!
 
 ```{r}
 sum(is.na(penguins)) # Total number of Nas in the document
+sum(is.na(penguins$sex)) # Total number of NAs in a specific column
 sum(!complete.cases(penguins)) # total number of rows that contain at least one NA
-penguins_clean<- penguins %>% drop_na()
+penguins_clean<- penguins %>% drop_na() # removes all the rows if there is at least one NA
+penguins_clean_2<- penguins %>% drop_na(sex) # removes all the rows if there is at least one NA in a specific column
 
 ```
 
@@ -620,6 +632,7 @@ Time to use ggplot to visually explore the following questions:
 ```
 
 ## End of Session
+
 
 
 
