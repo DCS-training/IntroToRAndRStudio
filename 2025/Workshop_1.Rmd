@@ -96,10 +96,10 @@ a <- 3
 b <- c(0,1,2,3)
 c <- seq(from = 0, to = 24, by = 8)
 d <- rbind(b, c) 
-Wow <- "This course is amazing!!"
-`Yes!` <- TRUE # the backticks here allow you to include punctuation and spaces in your object names. It is good practice however to use the '_' instead of a space.
+Wow <- "This course is so helpful!"
+`Yes!` <- TRUE # the backticks here allow you to include punctuation and spaces in your object names. It is good practice however to use the underscore '_' instead of a space.
 ```
-We can also use '<-' to create duplicates and backups of data and to save checkpoints during longer operations.
+We can also use '<-' operator to create duplicates and backups of data and to save checkpoints during longer operations.
 ```{r}
 b_backup <- b
 b <- b_backup
